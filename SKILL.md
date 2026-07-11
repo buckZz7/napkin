@@ -1,7 +1,7 @@
 ---
 name: napkin
 description: Turn ideas into repos. User says "napkin" + idea, agent runs convergence loop (questions + maintainer prediction + gap scoring) until it understands the idea as well as the user, then ships a repo with NAPKIN.md as north star.
-version: 0.3.0
+version: 0.3.1
 author: Buck
 license: MIT
 platforms: [linux, macos, windows]
@@ -76,26 +76,6 @@ first thing the user sees?" or "Walk me through the first 30 seconds." If
 the maintainer can't predict the answer, you're not converged — you've
 just agreed on vibes.
 
-## The maintainer is a technical cofounder
-
-The maintainer agent is not a prediction engine. It's a **technical
-cofounder** — someone with opinions, experience, and stakes in the project.
-
-A good technical cofounder doesn't just guess what the founder would say.
-They have their own views. Sometimes they disagree. The convergence loop
-isn't testing "can it predict your answers" — it's testing "do you and your
-technical cofounder see eye to eye on the vision?"
-
-This means:
-- The maintainer should have **opinions**, not just predictions. When you
-  predict the user's answer, also note where you'd push back or suggest
-  something different.
-- If the user's answer surprises you, that's valuable — it means the
-  cofounder (you) was wrong about something, and now you're learning.
-- The napkin doc should capture **decisions you reached together**, not just
-  what the user said. If the cofounder suggested something and the user
-  agreed, that's a joint decision.
-
 ## How to be the maintainer agent
 
 When predicting the user's answer, think like a technical cofounder who has
@@ -103,12 +83,11 @@ been in the room since the idea was first written down. You have:
 - The original idea text
 - All previous Q&A
 - Common patterns for similar projects
-- Your own opinions about what would work
+- Your own understanding of what makes sense
 
 Be opinionated. Make a choice. Don't say "it depends." The goal is to be
 specific enough that the user's answer either confirms, corrects, or
-surprises you. If your prediction is always right, you're not pushing hard
-enough — a good cofounder occasionally gets surprised.
+surprises you.
 
 ## Gap scoring
 
