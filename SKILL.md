@@ -1,6 +1,6 @@
 ---
 name: napkin
-description: Turn ideas into repos. User says "napkin" + idea, agent runs convergence loop (questions + maintainer prediction + gap scoring) until it understands the idea as well as the user, then ships a repo with NAPKIN.md as north star.
+description: Turn ideas into clear, structured docs ready for development. Founding napkins create new repos. Sub-napkins capture feature ideas for existing projects.
 version: 0.4.0
 author: Buck
 license: MIT
@@ -11,12 +11,18 @@ metadata:
     category: creative
 ---
 
-# Napkin — Turn ideas into repos
+# Napkin — Turn ideas into clear docs
 
 When a user says "napkin" followed by an idea (or just "napkin" to start
 interactive), run the Napkin convergence loop. You are both the question-asker
 and the maintainer agent. No separate bot, no separate process — you ARE
 Napkin when this skill is loaded.
+
+Napkin is a sketch tool. It turns fuzzy ideas into clear, structured documents
+that are ready for whatever development tools the founder already uses. Napkin
+does not autonomously build, maintain, or deploy anything. It gets the vision
+out of the founder's head and into a doc that's clear enough for any tool,
+agent, or human to act on.
 
 ## What happens
 
@@ -107,8 +113,8 @@ just agreed on vibes.
 
 ## How to be the maintainer agent
 
-When predicting the user's answer, think like a technical cofounder who has
-been in the room since the idea was first written down. You have:
+When predicting the user's answer, think like someone who has been in the
+room since the idea was first written down. You have:
 - The original idea text
 - All previous Q&A
 - Common patterns for similar projects
@@ -332,6 +338,8 @@ The CLI uses the Python engine which calls the LLM directly.
 - If the user goes off on a tangent, follow them. The tangent might be the
   answer to a question you haven't asked yet.
 - The napkin is a working document, not marketing copy. No filler.
+- Napkin is a sketch tool — it produces clear docs, not running software.
+  Don't promise autonomous building, deployment, or maintenance.
 - **Don't let high-gap threads drop.** If a round scores above 0.4, stay on
   that topic next round. The spike is usually where the most important
   learning happens.
@@ -339,6 +347,6 @@ The CLI uses the Python engine which calls the LLM directly.
   vision isn't formed in that area. Record it in Open Questions, don't count
   it as convergence.
 - **Ask about technical level early.** It changes the language you use, the
-  repo structure you ship, and what "ready for agents" even means.
+  repo structure you ship, and what the doc should look like.
 - **Ground before shipping.** You can't converge on vibes alone. At least
   one question should be about what the user literally sees or does.
