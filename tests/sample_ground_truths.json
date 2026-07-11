@@ -1,0 +1,112 @@
+[
+  {
+    "id": "tipping-app",
+    "idea": "tipping app for creators",
+    "vision": "A web app where fans can send tips to their favorite creators. The creator gets a profile page with a tip jar. Fans can tip any amount via Stripe. The creator sees a dashboard with total tips, top supporters, and recent activity. The vibe is friendly and casual, not corporate. Think 'Buy Me a Coffee' but more community-focused. Target users are small-to-mid creators (10K-100K followers) who don't have fancy monetization set up. The MVP is just: creator profile, tip jar, Stripe connect, basic dashboard. No subscriptions, no NFTs, no crypto. The brand should feel warm — rounded corners, soft colors, maybe a handwritten font for headers. Light mode by default.",
+    "areas": {
+      "target_users": "Small-to-mid creators with 10K-100K followers who don't have fancy monetization",
+      "brand_feel": "Friendly, casual, warm. Rounded corners, soft colors, handwritten font for headers. Light mode.",
+      "technical_level": "The creator is non-technical. The app handles everything — no setup beyond connecting Stripe.",
+      "scope_in": "Creator profile, tip jar, Stripe connect, basic dashboard with totals/top supporters/recent activity",
+      "scope_out": "No subscriptions, no NFTs, no crypto, no messaging, no content hosting",
+      "monetization": "The app takes a small percentage of each tip (2-3%) plus Stripe's fees",
+      "ux_first_screen": "User lands on a creator's profile page with a big tip jar button at the top. They enter an amount and pay. No signup required to tip.",
+      "visual_reference": "Buy Me a Coffee but warmer and more community-focused"
+    },
+    "key_decisions": [
+      "Stripe for payments",
+      "2-3% platform fee",
+      "No signup required to tip",
+      "Light mode only for MVP",
+      "Handwritten font for headers"
+    ]
+  },
+  {
+    "id": "habit-tracker",
+    "idea": "minimal habit tracker that doesn't feel like work",
+    "vision": "A mobile-first web app for tracking daily habits. The core idea is that tracking should feel effortless, not like filling out a spreadsheet. You add a habit, it shows up as a simple streak card. Tap to mark done. That's it. No charts, no analytics, no reminders in the MVP. The design is dark mode, minimal, with one accent color per habit. Think Linear's aesthetic but for personal habits. Target users are productivity-curious people who've tried habit trackers before and found them too heavy. The MVP is: add habit, mark done, see streak. Habits reset at midnight. No social features, no sharing. Monetization: free with a paid tier that adds custom themes and unlimited habits (free tier = 3 habits max). Brand should feel calm and focused, not gamified — no confetti, no badges, no streak shaming for misses.",
+    "areas": {
+      "target_users": "Productivity-curious people who found existing habit trackers too heavy",
+      "brand_feel": "Calm, focused, minimal. Dark mode. One accent color per habit. No gamification — no confetti, no badges, no streak shaming.",
+      "technical_level": "The user is somewhat technical — comfortable with web apps but not a developer",
+      "scope_in": "Add habit, mark done, see streak. Habits reset at midnight. Free tier with 3 habits. Paid tier with custom themes and unlimited habits.",
+      "scope_out": "No charts, no analytics, no reminders, no social features, no sharing, no gamification",
+      "monetization": "Free with 3 habits. Paid tier: custom themes + unlimited habits.",
+      "ux_first_screen": "User sees their habit cards stacked vertically. Each shows habit name, streak count, and a tap target. Tap marks done for today.",
+      "visual_reference": "Linear's aesthetic — clean, dark, minimal"
+    },
+    "key_decisions": [
+      "Dark mode only",
+      "Free tier limited to 3 habits",
+      "No gamification elements",
+      "Habits reset at midnight",
+      "Mobile-first web app"
+    ]
+  },
+  {
+    "id": "recipe-sharing",
+    "idea": "recipe sharing app for home cooks",
+    "vision": "A web app where home cooks can save, organize, and share their recipes. The key differentiator is that recipes are structured — ingredients, steps, timing — not just blog posts. When you share a recipe, the other person gets an interactive cooking view with a timer, step-by-step navigation, and ingredient checklist. The MVP focuses on: recipe editor with structured fields, recipe page with cooking mode, and basic search. No meal planning, no grocery lists, no social feed in the MVP. Target users are enthusiastic home cooks who currently use a mix of notes apps and bookmarks. The brand should feel homey and warm — think a well-worn cookbook, not a sleek food delivery app. Earth tones, serif fonts, paper-like backgrounds. Light mode. Monetization: free to browse and cook, paid to publish unlimited recipes (free = publish 5 per month).",
+    "areas": {
+      "target_users": "Enthusiastic home cooks who currently use notes apps and bookmarks",
+      "brand_feel": "Homey and warm. Earth tones, serif fonts, paper-like backgrounds. Like a well-worn cookbook. Light mode.",
+      "technical_level": "Non-technical users who are comfortable with web apps",
+      "scope_in": "Recipe editor with structured fields (ingredients, steps, timing). Recipe page with interactive cooking mode (timer, step-by-step, ingredient checklist). Basic search. Free to browse and cook.",
+      "scope_out": "No meal planning, no grocery lists, no social feed, no video, no ratings in MVP",
+      "monetization": "Free to browse and cook. Paid to publish unlimited recipes (free = 5 publishes per month).",
+      "ux_first_screen": "User opens a recipe and sees an overview with ingredients and steps. A 'Start Cooking' button launches the interactive cooking mode with step-by-step navigation and a built-in timer.",
+      "visual_reference": "A well-worn cookbook — not a food delivery app"
+    },
+    "key_decisions": [
+      "Structured recipe format, not blog posts",
+      "Interactive cooking mode with timer",
+      "Earth tones and serif fonts",
+      "Free tier: 5 recipe publishes per month",
+      "Light mode"
+    ]
+  },
+  {
+    "id": "api-monitor",
+    "idea": "simple API monitoring tool for indie developers",
+    "vision": "A lightweight API monitoring service for solo developers and small teams. You paste an endpoint URL, it pings it every minute and tells you when it's down. The key differentiator is simplicity — no complex dashboard, no alert routing, no on-call schedules. You get a clean status page for your APIs and a Slack/Discord webhook for alerts. The MVP is: add endpoint, set expected status code and response time threshold, get alerts via webhook, see a simple uptime timeline. Target users are solo devs and small teams (1-5 people) who currently use nothing or Uptime Robot and find it either too basic or too complex. The brand should feel developer-friendly and no-nonsense — dark theme, monospace fonts, minimal UI. Think Cronitor but simpler. Monetization: free for 10 endpoints, paid for more + faster check intervals + email alerts. Self-hostable option in the future but not MVP.",
+    "areas": {
+      "target_users": "Solo developers and small teams (1-5 people) who find Uptime Robot too basic or too complex",
+      "brand_feel": "Developer-friendly, no-nonsense. Dark theme, monospace fonts, minimal UI. Think Cronitor but simpler.",
+      "technical_level": "Technical users — developers who know what an API endpoint is",
+      "scope_in": "Add endpoint with expected status code and response time threshold. Alerts via Slack/Discord webhook. Simple uptime timeline. Free for 10 endpoints.",
+      "scope_out": "No complex alert routing, no on-call schedules, no self-hosting in MVP, no multi-region checks",
+      "monetization": "Free for 10 endpoints. Paid: more endpoints + faster checks + email alerts.",
+      "ux_first_screen": "User sees a list of their monitored endpoints with current status (green/red), response time, and uptime percentage. Click an endpoint to see a timeline.",
+      "visual_reference": "Cronitor but simpler and cleaner"
+    },
+    "key_decisions": [
+      "Dark theme with monospace fonts",
+      "Slack/Discord webhook for alerts",
+      "1-minute check intervals",
+      "Free tier: 10 endpoints",
+      "Self-hostable in future, not MVP"
+    ]
+  },
+  {
+    "id": "journaling-app",
+    "idea": "private journaling app with AI prompts",
+    "vision": "A mobile-first journaling app that uses AI to suggest writing prompts based on your mood and past entries. The core experience: you open the app, pick how you're feeling (a simple emoji-based mood selector), and the app gives you a writing prompt tailored to that mood. You write as much or as little as you want. Entries are private by default — no social features, no sharing. The AI also surfaces patterns over time ('You tend to write more when you pick the 'tired' mood'). The MVP is: mood selector, AI prompt generation, writing editor, basic pattern insights after 10+ entries. No mood charts, no streaks, no reminders in the MVP. Target users are people who want to journal but get stuck staring at a blank page. The brand should feel intimate and safe — soft pastel colors, rounded UI, gentle micro-interactions. Think Day One but with AI prompts and softer. Monetization: free with 3 prompts per day, paid for unlimited prompts + pattern insights. All data stored locally first, synced encrypted to cloud.",
+    "areas": {
+      "target_users": "People who want to journal but get stuck staring at a blank page",
+      "brand_feel": "Intimate and safe. Soft pastel colors, rounded UI, gentle micro-interactions. Think Day One but softer.",
+      "technical_level": "Non-technical users who want a private, easy journaling experience",
+      "scope_in": "Emoji-based mood selector. AI prompt generation based on mood and past entries. Writing editor. Basic pattern insights after 10+ entries. Local-first storage with encrypted cloud sync.",
+      "scope_out": "No mood charts, no streaks, no reminders, no social features, no sharing",
+      "monetization": "Free with 3 prompts per day. Paid: unlimited prompts + pattern insights.",
+      "ux_first_screen": "User opens the app and sees a mood selector (emoji grid). After picking a mood, they get an AI-generated prompt and a writing editor. They write and save.",
+      "visual_reference": "Day One but with AI prompts and softer aesthetic"
+    },
+    "key_decisions": [
+      "AI-generated prompts based on mood and past entries",
+      "Emoji-based mood selector",
+      "Local-first storage with encrypted cloud sync",
+      "Soft pastel colors and rounded UI",
+      "Free tier: 3 prompts per day"
+    ]
+  }
+]
