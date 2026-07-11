@@ -1,7 +1,7 @@
 ---
 name: napkin
 description: Turn ideas into clear, structured docs ready for development. Founding napkins create new repos. Sub-napkins capture feature ideas for existing projects.
-version: 0.4.2
+version: 0.4.3
 author: Buck
 license: MIT
 platforms: [linux, macos, windows]
@@ -221,10 +221,14 @@ D) [None of the above — something else]
 ```
 
 **Before the user answers**, predict which option they'll pick (A, B, C, or
-D). Keep the prediction to yourself — do NOT reveal it before the user
-answers. After the user answers, reveal your prediction and score whether
-you got it right, same as the gap analysis in the open-ended rounds. This
-keeps the exam from biasing the user's answers.
+D). DO NOT write the predictions anywhere in the message. DO NOT write
+"(hidden)" or "predictions: X, Y, Z" — that is revealing them. The
+predictions exist only in your thinking. After the user answers, in your
+NEXT message, reveal the predictions and score whether you got each one
+right. This keeps the exam from biasing the user's answers.
+
+The exam questions should be the last thing in your message. Nothing after
+them. No predictions, no analysis, no notes. Just the questions.
 
 Scoring:
 - You predicted correctly → 0.0 gap. You understand this area.
@@ -343,6 +347,43 @@ python /opt/data/napkin/cli.py "tipping app for creators"
 
 The CLI uses the Python engine which calls the LLM directly.
 
+## Three install paths
+
+When shipping the landing page or telling users how to get Napkin, there
+are three paths:
+
+1. **Agent users** (Hermes, Claude Code, Cursor, Codex, OpenCode):
+   `npx skills add buckZz7/napkin` — one command, auto-detects agent.
+2. **ChatGPT / Claude chat / any LLM**: Copy the prompt from the landing
+   page and paste it in. ChatGPT and Claude chat apps CANNOT install
+   skills via npx — they're chat interfaces, not agent runtimes. The
+   copy-paste prompt is the only path for them.
+3. **CLI**: Clone the repo, set up venv, run `python cli.py "idea"`.
+
+The landing page should show all three paths clearly with copy buttons.
+
+## Testing the convergence engine
+
+The engine has a testing framework at `/opt/data/napkin/tests/` that supports
+two modes: **simulated runs** (engine plays both sides against a ground-truth
+vision) and **recorded replays** (replay saved sessions with tweaked params).
+Outputs metrics: rounds to convergence, gap trajectory, exam pass rate, false
+convergence rate, coverage, missed areas.
+
+Run with `uv run` (pytest is in the project venv):
+
+```bash
+cd /opt/data/napkin
+uv run python3 tests/test_engine.py list                          # list ground truths + sessions
+uv run python3 tests/test_engine.py simulated tipping-app         # single simulated run
+uv run pytest tests/ -v -k "not simulated and not simulator and not replay"  # unit tests only
+```
+
+LLM-dependent tests auto-skip without `OPENAI_API_KEY`.
+
+See `references/testing-framework.md` for full API docs, the monkey-patch
+recording technique, and the ground truth format.
+
 ## Important
 
 - You are both the question-asker AND the maintainer. No separation needed.
@@ -373,6 +414,17 @@ The CLI uses the Python engine which calls the LLM directly.
   swatches, and image-based comparisons are a future web UI feature. In chat,
   describe visual options in words and use multiple choice. Don't try to
   render fonts or colors inline — it doesn't work in Telegram/Discord/etc.
+- **Don't ask the user if they want to pause or continue.** When the
+  convergence loop is running, keep going. The user will tell you when they're
+  done. Never say "want to pick this up tomorrow?" or similar.
+- **Speed matters for UX.** Don't overwhelm the user with too many rounds.
+  If you can converge in 5 rounds, don't drag it to 10. But accuracy is
+  most important — don't rush convergence to save time. Balance both.
+- **Real-world founder testing.** For testing convergence quality, use real
+  documented founders and their open-source projects as ground truth. One
+  LLM role-plays as the founder based on public material; the engine runs
+  convergence with no web access; then compare the napkin doc to the actual
+  product. See `napkins/real-world-founder-testing.md` in the repo.
 - See `references/lessons-from-first-run.md` for concrete examples of what
   went wrong and how it was fixed.
 - See `references/layout-lessons.md` for web design lessons learned while
