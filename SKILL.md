@@ -91,6 +91,12 @@ what the output repo should look like.
 - What problem does this solve?
 - What does the first screen / interaction look like? (Ask one concrete
   grounding question early — don't converge on abstract vibes alone.)
+- **Visual reference:** What does this look like? Not just "minimal" — ask
+  for specific references. "What existing product or website feels closest
+  to what you want?" "Light or dark?" "Any fonts that feel right?" If the
+  project has a website or UI, these answers drive the build. Don't move
+  past this area until you have concrete visual details — color scheme,
+  font style, at least one reference product. "Minimal" is not enough.
 
 **Round 5-8 (specific):** UX scenarios, edge cases, scope.
 - Walk me through a specific user flow
@@ -215,7 +221,10 @@ D) [None of the above — something else]
 ```
 
 **Before the user answers**, predict which option they'll pick (A, B, C, or
-D). Then present the questions and let the user pick.
+D). Keep the prediction to yourself — do NOT reveal it before the user
+answers. After the user answers, reveal your prediction and score whether
+you got it right, same as the gap analysis in the open-ended rounds. This
+keeps the exam from biasing the user's answers.
 
 Scoring:
 - You predicted correctly → 0.0 gap. You understand this area.
