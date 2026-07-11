@@ -1,7 +1,7 @@
 ---
 name: napkin
 description: Turn ideas into clear, structured docs ready for development. Founding napkins create new repos. Sub-napkins capture feature ideas for existing projects.
-version: 0.4.0
+version: 0.4.2
 author: Buck
 license: MIT
 platforms: [linux, macos, windows]
@@ -198,9 +198,9 @@ converged), run a **verification round** before shipping. This is where
 the format changes.
 
 Instead of open-ended questions, you generate **multiple choice questions**
-— the kind where the user just picks an option. These test whether the
-technical cofounder (you) actually understands the vision, not just whether
-you've been agreeing on vibes.
+— the kind where the user just picks an option. These test whether you
+actually understand the vision, not just whether you've been agreeing on
+vibes.
 
 Generate 3-5 multiple choice questions covering different areas:
 - One about target users
@@ -369,3 +369,14 @@ The CLI uses the Python engine which calls the LLM directly.
   repo structure you ship, and what the doc should look like.
 - **Ground before shipping.** You can't converge on vibes alone. At least
   one question should be about what the user literally sees or does.
+- **Napkin is text-only in chat.** Visual mood boards, font previews, color
+  swatches, and image-based comparisons are a future web UI feature. In chat,
+  describe visual options in words and use multiple choice. Don't try to
+  render fonts or colors inline — it doesn't work in Telegram/Discord/etc.
+- See `references/lessons-from-first-run.md` for concrete examples of what
+  went wrong and how it was fixed.
+- See `references/layout-lessons.md` for web design lessons learned while
+  building the Napkin landing page (card layout, nav contrast, skill install).
+- See `references/indie-web-design.md` for CSS patterns to produce a
+  hand-drawn, indie aesthetic (asymmetric border-radius, warm paper bg,
+  handwriting fonts, dark mode with system detection).

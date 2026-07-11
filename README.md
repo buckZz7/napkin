@@ -1,10 +1,24 @@
 # Napkin
 
-Turn ideas into repos ready for AI to develop and maintain.
+Turn ideas into clear docs ready to build.
 
-You write down an idea. Napkin asks you questions. Behind the scenes, a
-maintainer agent answers the same questions. When it can predict your answers,
-you're in lockstep. You ship it, and a repo is born with the napkin as the
-north star.
+You say "napkin" and ramble your idea. Your agent asks you questions until it
+understands what you mean. Then it ships a doc clear enough to hand to any
+coding agent, LLM, or human to build from. That's it — Napkin doesn't build
+it, your tools do.
 
-See [NAPKIN.md](NAPKIN.md) for the full project vision.
+## Get started
+
+**Agent users** (Hermes, Claude Code, Cursor, Codex, OpenCode):
+```bash
+npx skills add buckZz7/napkin
+```
+
+**ChatGPT / Claude chat / any LLM:** Copy the prompt from
+[napkin website](https://buckzz7.github.io/napkin/#get) and paste it in.
+
+## Links
+
+- Website: https://buckzz7.github.io/napkin/
+- Full skill: [SKILL.md](SKILL.md)
+- Project vision: [NAPKIN.md](NAPKIN.md)
