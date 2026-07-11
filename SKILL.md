@@ -340,6 +340,11 @@ The CLI uses the Python engine which calls the LLM directly.
 - The napkin is a working document, not marketing copy. No filler.
 - Napkin is a sketch tool — it produces clear docs, not running software.
   Don't promise autonomous building, deployment, or maintenance.
+- **Ship the whole vision.** If the napkin mentions a landing page, the repo
+  should have a landing page. If it mentions a skill, the repo should have
+  the skill. If it mentions a CLI, include the CLI. The napkin doc should be
+  complete enough that a coding agent can build everything described in it
+  without asking the user more questions. This is the core promise of Napkin.
 - **Don't let high-gap threads drop.** If a round scores above 0.4, stay on
   that topic next round. The spike is usually where the most important
   learning happens.
