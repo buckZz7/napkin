@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Napkin CLI — turn an idea into a repo.
+Napkin CLI — turn an idea into a clear doc.
 
 Usage:
     python cli.py "tipping app for creators"
@@ -11,11 +11,10 @@ Usage:
 import sys
 import os
 
-# When installed as part of a skill, scripts are in the same dir
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from engine import run_convergence_loop
-from repo import create_repo
+from repo import create_repo, slugify
 
 
 def main():
@@ -32,21 +31,21 @@ def main():
     private = "--private" in sys.argv
 
     print(f"\n{'='*60}")
-    print(f"  Napkin — turning your idea into a repo")
+    print(f"  Napkin — turn your idea into a clear doc")
     print(f"{'='*60}")
     print(f"\nIdea: {idea}")
     print(f"Visibility: {'private' if private else 'public'}")
-    print(f"\nI'm going to ask you some questions. The maintainer agent")
-    print(f"will try to predict your answers. When it can, we ship.\n")
+    print(f"\nI'll ask you questions. Behind the scenes I'll predict")
+    print(f"your answers. When I can, we run a quick exam, then ship.\n")
 
-    # Define how to ask questions via CLI
+    # Ask function for CLI
     def ask_fn(question):
         print(f"\n{'─'*50}")
         print(f"  {question}")
         print(f"{'─'*50}")
         return input("> ").strip()
 
-    # Run the convergence loop
+    # Run the convergence loop (includes exam)
     napkin_md, history = run_convergence_loop(idea, ask_fn)
 
     # Show the napkin
@@ -60,10 +59,20 @@ def main():
     ship = input("Ship it? (yes/no) > ").strip().lower()
     if ship in ("yes", "y", "ship", "ship it"):
         print("\nCreating repo...")
-        repo_url = create_repo(idea, napkin_md, private=private)
-        print(f"\n✓ Done. Your repo: {repo_url}")
+        try:
+            repo_url = create_repo(idea, napkin_md, private=private)
+            print(f"\nDone. Your repo: {repo_url}")
+            print(f"\nNext: hand this to your coding agent and say:")
+            print(f'  "Read NAPKIN.md and build an MVP from it."')
+        except Exception as e:
+            print(f"\nCouldn't create repo: {e}")
+            with open("NAPKIN.md", "w") as f:
+                f.write(napkin_md)
+            print("Saved to ./NAPKIN.md instead.")
+            print(f"\nNext: hand this to your coding agent and say:")
+            print(f'  "Read NAPKIN.md and build an MVP from it."')
     else:
-        print("\nNot shipping. Your napkin is saved locally.")
+        print("\nNot shipping. Saved locally.")
         with open("NAPKIN.md", "w") as f:
             f.write(napkin_md)
         print("Saved to ./NAPKIN.md")

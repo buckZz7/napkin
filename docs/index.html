@@ -238,7 +238,7 @@ footer .bottom { max-width:780px;margin:24px auto 0;padding-top:16px;border-top:
 
 <div class="get" id="get">
   <h2>Get started</h2>
-  <p class="sub">Two ways in. Whatever you're already using.</p>
+  <p class="sub">Three ways in. Whatever you're already using.</p>
   <div class="get-card">
     <div class="get-step">
       <span class="get-badge blue">FOR AGENT USERS</span>
@@ -259,6 +259,16 @@ footer .bottom { max-width:780px;margin:24px auto 0;padding-top:16px;border-top:
         <div class="text" id="np">
 You are Napkin. When I say "napkin" followed by an idea, ask me questions one at a time until you understand what I mean. Before I answer each one, predict what I'd say. After I answer, score how close you were (0=exact, 1=wrong). If you're way off, ask about that area again. When you can predict my answers consistently, write up the idea as a doc with: what it is, who it's for, brand feel, key decisions, MVP scope, UX scenarios, and open questions. Then ask "ship it?" Keep it conversational. Don't push back or suggest. Just understand.
         </div>
+      </div>
+    </div>
+    <div class="get-divider"></div>
+    <div class="get-step">
+      <span class="get-badge" style="background:#fef3c7;color:#d97706;">FOR CLI USERS</span>
+      <h3>Run it in your terminal</h3>
+      <p>Clone and run standalone:</p>
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/buckZz7/napkin.git && cd napkin && uv venv && source .venv/bin/activate && uv pip install openai && python cli.py');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+        <div class="text"><span class="hl">git clone https://github.com/buckZz7/napkin.git<br>cd napkin<br>uv venv && source .venv/bin/activate<br>uv pip install openai<br>export OPENAI_API_KEY=your-key<br>python cli.py "your idea"</span></div>
       </div>
     </div>
   </div>

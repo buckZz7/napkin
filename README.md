@@ -9,13 +9,25 @@ it, your tools do.
 
 ## Get started
 
+Three ways in. Whatever you're already using.
+
 **Agent users** (Hermes, Claude Code, Cursor, Codex, OpenCode):
 ```bash
 npx skills add buckZz7/napkin
 ```
 
 **ChatGPT / Claude chat / any LLM:** Copy the prompt from
-[napkin website](https://buckzz7.github.io/napkin/#get) and paste it in.
+[the website](https://buckzz7.github.io/napkin/#get) and paste it in.
+
+**CLI:**
+```bash
+git clone https://github.com/buckZz7/napkin.git
+cd napkin
+uv venv && source .venv/bin/activate
+uv pip install openai
+export OPENAI_API_KEY=your-key
+python cli.py "tipping app for creators"
+```
 
 ## Links
 
