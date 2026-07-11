@@ -58,6 +58,11 @@ name, a feature, "add X to Y", "what if we did Z" — it's a sub-napkin.
 4. Generate a sub-napkin file (see Sub-napkin format)
 5. Ask "Ship it?"
 6. If yes: add the file to `napkins/` in the existing repo and push
+7. **Build it.** The sub-napkin isn't done when the file is written. It's
+   done when the feature is built and working, with no more questions to the
+   founder. The doc must be complete enough for any coding agent to build
+   the feature without asking the user anything else. Same standard as the
+   founding napkin.
 
 Sub-napkins are self-contained. They don't reference the main NAPKIN.md for
 context — each one includes everything an agent needs to understand and
