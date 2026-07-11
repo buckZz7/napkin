@@ -171,7 +171,29 @@ footer .bottom { max-width:780px;margin:24px auto 0;padding-top:16px;border-top:
     <div class="links">
       <a href="#how">How</a>
       <a href="https://github.com/buckZz7/napkin">GitHub</a>
-      <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark'); this.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙'">🌙</button>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+      <script>
+      function getTheme() {
+        return localStorage.getItem('napkin-theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      }
+      function applyTheme() {
+        var t = getTheme();
+        document.documentElement.setAttribute('data-theme', t);
+        var btn = document.querySelector('.theme-toggle');
+        if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+      }
+      function toggleTheme() {
+        var current = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('napkin-theme', next);
+        applyTheme();
+      }
+      applyTheme();
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if (!localStorage.getItem('napkin-theme')) applyTheme();
+      });
+      </script>
       <a href="#get" class="cta">Get the skill</a>
     </div>
   </div>
