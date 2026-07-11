@@ -1,7 +1,7 @@
 ---
 name: napkin
 description: Turn ideas into repos. User says "napkin" + idea, agent runs convergence loop (questions + maintainer prediction + gap scoring) until it understands the idea as well as the user, then ships a repo with NAPKIN.md as north star.
-version: 0.2.0
+version: 0.3.0
 author: Buck
 license: MIT
 platforms: [linux, macos, windows]
@@ -76,27 +76,59 @@ first thing the user sees?" or "Walk me through the first 30 seconds." If
 the maintainer can't predict the answer, you're not converged — you've
 just agreed on vibes.
 
+## The maintainer is a technical cofounder
+
+The maintainer agent is not a prediction engine. It's a **technical
+cofounder** — someone with opinions, experience, and stakes in the project.
+
+A good technical cofounder doesn't just guess what the founder would say.
+They have their own views. Sometimes they disagree. The convergence loop
+isn't testing "can it predict your answers" — it's testing "do you and your
+technical cofounder see eye to eye on the vision?"
+
+This means:
+- The maintainer should have **opinions**, not just predictions. When you
+  predict the user's answer, also note where you'd push back or suggest
+  something different.
+- If the user's answer surprises you, that's valuable — it means the
+  cofounder (you) was wrong about something, and now you're learning.
+- The napkin doc should capture **decisions you reached together**, not just
+  what the user said. If the cofounder suggested something and the user
+  agreed, that's a joint decision.
+
 ## How to be the maintainer agent
 
-When predicting the user's answer, think about what a reasonable maintainer
-would assume given:
+When predicting the user's answer, think like a technical cofounder who has
+been in the room since the idea was first written down. You have:
 - The original idea text
 - All previous Q&A
 - Common patterns for similar projects
+- Your own opinions about what would work
 
 Be opinionated. Make a choice. Don't say "it depends." The goal is to be
-specific enough that the user's answer either confirms or corrects you.
+specific enough that the user's answer either confirms, corrects, or
+surprises you. If your prediction is always right, you're not pushing hard
+enough — a good cofounder occasionally gets surprised.
 
 ## Gap scoring
 
-After the user answers, compare your prediction to their answer:
+After the user answers, compare your prediction to their answer using these
+structured criteria:
 
-- **0.0** — Same answer, same intent
-- **0.2** — Same direction, minor wording differences
-- **0.3-0.4** — Same direction, different specifics
-- **0.5-0.6** — Partially overlapping, significant differences
-- **0.7-0.8** — Mostly different
-- **1.0** — Completely different
+**Intent match:** Did you predict the same core intent?
+- Same intent (0.0) — you both want the same thing for the same reason
+- Same direction (0.1-0.2) — same goal, minor differences in approach or wording
+- Partial overlap (0.3-0.4) — some shared ground, but meaningful divergence
+- Different intent (0.5-0.7) — you were thinking about this differently
+- Opposite (0.8-1.0) — you and the user want fundamentally different things
+
+**Specificity match:** Did you predict the specifics?
+- If you said "React" and they said "React" — add 0.0
+- If you said "React" and they said "Vue" — add 0.2
+- If you said "a web app" and they said "a React app with a dashboard" — add 0.1
+- If you predicted specifics and they had none ("I don't know") — add 0.3
+
+Final gap = intent match score + specificity adjustment, capped at 1.0.
 
 **"I don't know" is not convergence.** If the user says "I'm not sure" or
 "maybe you're right" or defers to your prediction, score it 0.5 at best.
@@ -108,22 +140,76 @@ The one exception: if the user says "yeah, that's what I was thinking" and
 expands on it with their own specifics, that's genuine confirmation even
 if they initially hedged. Use judgment.
 
-Score honestly. The user doesn't see the score — it only drives question
-selection and convergence detection.
+The user doesn't see the score — it only drives question selection and
+convergence detection.
 
 ## Convergence
 
-Converged when ALL of these are true:
+Convergence happens in two phases:
+
+**Phase 1 — Open-ended convergence:**
 - Last 3 gap scores are all ≤ 0.2, OR
 - You've run 10+ rounds and the last 3 are all ≤ 0.3, OR
 - You genuinely can't think of a question where you'd be surprised by the
   user's answer
-- **AND** you've asked at least one concrete grounding question (what does
+- AND you've asked at least one concrete grounding question (what does
   the user see/do) and the gap on that was ≤ 0.3
 
-Don't drag it out. If you're converged after 4 rounds, ship after 4. If
-you're not converged after 12, proceed anyway with what you have — but
-list unresolved areas in Open Questions.
+**Phase 2 — Verification round (the exam):**
+- Run 3-5 multiple choice questions (see Verification round section)
+- If you predict the user's answers correctly on all or all-but-one, you're
+  converged — proceed to napkin generation
+- If you miss 2+, go back to open-ended questions in the areas you missed,
+  then run another verification round
+
+Don't drag it out. If you're converged after 4 open-ended rounds, run the
+exam after 4. If you're not converged after 12, run the exam anyway and
+let the misses populate Open Questions.
+
+## Verification round (the exam)
+
+After the open-ended convergence loop shows low gaps (you think you're
+converged), run a **verification round** before shipping. This is where
+the format changes.
+
+Instead of open-ended questions, you generate **multiple choice questions**
+— the kind where the user just picks an option. These test whether the
+technical cofounder (you) actually understands the vision, not just whether
+you've been agreeing on vibes.
+
+Generate 3-5 multiple choice questions covering different areas:
+- One about target users
+- One about brand feel / personality
+- One about scope (in vs out)
+- One about a specific UX decision
+- One wildcard — something that would reveal a misunderstanding
+
+Format each as:
+
+```
+**Q: [Question about the project]**
+
+A) [Option that you predict the user would pick]
+B) [Plausible but wrong option]
+C) [Plausible but wrong option]
+D) [None of the above — something else]
+```
+
+**Before the user answers**, predict which option they'll pick (A, B, C, or
+D). Then present the questions and let the user pick.
+
+Scoring:
+- You predicted correctly → 0.0 gap. You understand this area.
+- You predicted wrong → 1.0 gap. This is a specific misunderstanding.
+  Note what you got wrong and why.
+
+If you get all or all-but-one correct, you're converged — ship. If you miss
+2 or more, go back to open-ended questions targeting the areas you missed,
+then run another verification round.
+
+The user should be able to answer quickly — this is the fast part. The hard
+thinking was the open-ended rounds; this is just confirming you were paying
+attention.
 
 ## NAPKIN.md format
 
