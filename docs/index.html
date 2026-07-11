@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Napkin — Turn ideas into clear docs</title>
+<meta name="description" content="Give this skill to your agent. Say napkin and ramble your idea. Your agent gets on the same page and turns your idea into a clear doc ready to build.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090a;
+  --bg-panel: #0f1011;
+  --bg-elevated: #191a1b;
+  --text: #f7f8f8;
+  --text-secondary: #d0d6e0;
+  --text-tertiary: #8a8f98;
+  --text-quaternary: #62666d;
+  --accent: #5e6ad2;
+  --accent-bright: #7170ff;
+  --accent-hover: #828fff;
+  --green: #27a644;
+  --green-bright: #10b981;
+  --border: rgba(255,255,255,0.08);
+  --border-subtle: rgba(255,255,255,0.05);
+  --surface: rgba(255,255,255,0.02);
+  --surface-hover: rgba(255,255,255,0.04);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-feature-settings:"cv01","ss03";
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(8,9,10,0.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-subtle);
+}
+nav .inner { max-width:1140px;margin:0 auto;padding:12px 24px;display:flex;justify-content:space-between;align-items:center; }
+.logo { font-size:1.1em;font-weight:600;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:-0.02em; }
+nav .links { display:flex;gap:28px;align-items:center; }
+nav .links a { color:var(--text-secondary);text-decoration:none;font-size:0.85em;font-weight:500;transition:color 0.15s; }
+nav .links a:hover { color:var(--text); }
+nav .cta {
+  background:var(--accent);color:#fff;padding:6px 16px;border-radius:6px;
+  text-decoration:none;font-size:0.82em;font-weight:500;transition:background 0.15s;
+}
+nav .cta:hover { background:var(--accent-bright); }
+
+.hero { text-align:center;padding:180px 24px 80px;max-width:860px;margin:0 auto; }
+.hero .badge {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:9999px;font-size:0.8em;color:var(--text-tertiary);margin-bottom:36px;font-weight:500;
+}
+.hero .badge .dot { width:6px;height:6px;border-radius:50%;background:var(--green-bright);box-shadow:0 0 6px var(--green-bright); }
+.hero h1 {
+  font-size:3.4em;font-weight:600;letter-spacing:-1.584px;line-height:1.05;
+  margin-bottom:24px;
+}
+.hero h1 .accent { color:var(--accent-bright); }
+.hero .tagline {
+  font-size:1.15em;color:var(--text-tertiary);max-width:540px;
+  margin:0 auto 44px;font-weight:400;line-height:1.6;
+}
+.hero .buttons { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
+.btn-primary {
+  background:var(--accent);color:#fff;padding:8px 20px;border-radius:6px;
+  text-decoration:none;font-weight:500;font-size:0.9em;transition:background 0.15s;
+}
+.btn-primary:hover { background:var(--accent-bright); }
+.btn-secondary {
+  background:var(--surface);color:var(--text);border:1px solid var(--border);
+  padding:8px 20px;border-radius:6px;text-decoration:none;font-weight:500;
+  font-size:0.9em;transition:background 0.15s;
+}
+.btn-secondary:hover { background:var(--surface-hover); }
+
+section { max-width:1140px;margin:0 auto;padding:80px 24px; }
+section h2 { font-size:2em;font-weight:600;letter-spacing:-0.704px;text-align:center;margin-bottom:12px; }
+.section-subtitle { text-align:center;color:var(--text-tertiary);font-size:1.05em;margin-bottom:56px;max-width:520px;margin-left:auto;margin-right:auto; }
+
+/* Steps */
+.steps { display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:960px;margin:0 auto; }
+.step {
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:28px;transition:background 0.15s;
+}
+.step:hover { background:var(--surface-hover); }
+.step .step-num { font-size:0.78em;color:var(--text-quaternary);margin-bottom:16px; }
+.step h3 { font-size:1.05em;font-weight:590;margin-bottom:8px;letter-spacing:-0.24px; }
+.step p { color:var(--text-tertiary);font-size:0.88em;line-height:1.6; }
+
+/* Get the skill */
+.skill-box {
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  max-width:620px;margin:0 auto;overflow:hidden;
+}
+.skill-step { padding:28px; }
+.skill-divider { height:1px;background:var(--border-subtle);margin:0 28px; }
+.skill-badge { display:inline-block;padding:3px 10px;border-radius:9999px;font-size:0.72em;font-weight:500;margin-bottom:16px; }
+.skill-badge.skill { background:rgba(113,112,255,0.1);color:var(--accent-hover); }
+.skill-badge.prompt { background:rgba(16,185,129,0.08);color:var(--green-bright); }
+.skill-step h3 { font-size:1.1em;font-weight:590;margin-bottom:8px;letter-spacing:-0.24px; }
+.skill-step p { color:var(--text-tertiary);font-size:0.88em;line-height:1.6;margin-bottom:16px; }
+.skill-step a { display:inline-block;font-size:0.85em; }
+
+.prompt-box {
+  background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle);border-radius:6px;
+  margin-bottom:16px;padding:16px 20px;
+}
+.prompt-box .prompt-text { font-size:0.88em;color:var(--text-tertiary);line-height:1.7; }
+.prompt-box .highlight { color:var(--accent-hover);font-family:'JetBrains Mono',monospace;font-size:0.85em; }
+.copy-btn {
+  background:rgba(255,255,255,0.05);color:var(--text-secondary);border:1px solid var(--border);
+  padding:5px 14px;border-radius:6px;font-size:0.82em;font-weight:500;cursor:pointer;
+  margin-bottom:12px;transition:background 0.15s;
+}
+.copy-btn:hover { background:var(--bg-elevated); }
+
+/* Final CTA */
+.final-cta { text-align:center;padding:80px 24px;border-top:1px solid var(--border-subtle); }
+.final-cta h2 { margin-bottom:12px; }
+.final-cta p { color:var(--text-tertiary);margin-bottom:28px; }
+
+/* Footer */
+footer { border-top:1px solid var(--border-subtle);padding:48px 24px 32px; }
+footer .footer-inner { max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px; }
+footer .footer-brand { flex:1;min-width:200px; }
+footer .footer-brand .logo { font-size:1em;margin-bottom:12px; }
+footer .footer-brand p { color:var(--text-tertiary);font-size:0.82em;max-width:300px; }
+footer .footer-cols { display:flex;gap:64px; }
+footer .footer-col h4 { font-size:0.78em;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-quaternary);margin-bottom:12px;font-weight:500; }
+footer .footer-col a { display:block;color:var(--text-tertiary);text-decoration:none;font-size:0.85em;padding:4px 0;transition:color 0.15s; }
+footer .footer-col a:hover { color:var(--text); }
+footer .footer-bottom { max-width:1140px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--border-subtle);text-align:center;color:var(--text-quaternary);font-size:0.8em; }
+
+@media (max-width:768px) {
+  .hero h1 { font-size:2.2em;letter-spacing:-0.7px; }
+  .hero .tagline { font-size:1em; }
+  .steps { grid-template-columns:1fr; }
+  nav .links a:not(.cta) { display:none; }
+  footer .footer-cols { gap:40px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">📝 Napkin</a>
+    <div class="links">
+      <a href="#how">How It Works</a>
+      <a href="#get">Get Started</a>
+      <a href="https://github.com/buckZz7/napkin">GitHub</a>
+      <a href="#get" class="cta">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge"><span class="dot"></span> Turn ideas into clear docs</div>
+  <h1>Give your agent<br><span class="accent">the napkin skill.</span></h1>
+  <p class="tagline">Say "napkin" and ramble your idea. Your agent asks questions until it gets it. Then it ships a doc clear enough to hand to any coding agent to build.</p>
+  <div class="buttons">
+    <a href="#get" class="btn-primary">Get Started</a>
+    <a href="https://github.com/buckZz7/napkin" class="btn-secondary">View GitHub</a>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <h2>How It Works</h2>
+  <p class="section-subtitle">Three steps. No website to sign up for. It runs in whatever you already use.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Give your agent the skill</h3>
+      <p>Install the Napkin skill on your agent — Hermes, Claude, ChatGPT, or anything that can load a skill or read a prompt. Or copy the prompt from this page.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Say "napkin" and ramble</h3>
+      <p>Type "napkin" followed by your idea. Could be three words or three paragraphs. Your agent asks you questions. Behind the scenes it predicts your answers and scores how close it is.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Ship it</h3>
+      <p>When your agent can predict your answers, you're converged. It shows you the napkin doc. You say "ship it." You get a file ready to hand to any coding agent to build.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GET STARTED -->
+<section id="get">
+  <h2>Get Started</h2>
+  <p class="section-subtitle">Two ways in. Give your agent the skill, or copy the prompt.</p>
+  <div class="skill-box">
+    <div class="skill-step">
+      <span class="skill-badge skill">FOR AGENT USERS</span>
+      <h3>Install the skill</h3>
+      <p>If your agent supports skills (Hermes, Claude, etc.), install the Napkin skill. Then just say "napkin" followed by your idea in any chat.</p>
+      <a href="https://github.com/buckZz7/napkin/blob/main/SKILL.md" class="btn-primary">Get the skill</a>
+    </div>
+    <div class="skill-divider"></div>
+    <div class="skill-step">
+      <span class="skill-badge prompt">FOR CHATGPT / ANY LLM</span>
+      <h3>Copy the prompt</h3>
+      <p>No skill support? Copy this prompt and paste it into ChatGPT, Claude, or any LLM. It contains the full convergence loop instructions.</p>
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('napkin-prompt').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy prompt',2000)">Copy prompt</button>
+        <div class="prompt-text" id="napkin-prompt">
+You are Napkin. When I say "napkin" followed by an idea, run a convergence loop:<br><br>
+1. Ask me one question about the idea.<br>
+2. Before I answer, predict what I'd say based on context.<br>
+3. After I answer, score the gap (0=match, 1=different).<br>
+4. If gap > 0.4, ask a follow-up in the same area.<br>
+5. Repeat until you can predict my answers (last 3 gaps ≤ 0.2).<br>
+6. Run a verification round: 3-5 multiple choice questions where you predict my pick.<br>
+7. If you get all or all-but-one right, show me the napkin doc.<br>
+8. Ask "Ship it?"<br><br>
+Start broad (technical level, who's it for, brand feel) then get specific (UX flows, scope). Keep it conversational. Don't push back or suggest — just understand.<br><br>
+<span class="highlight">Napkin doc format: What this is, Who it's for, Brand feel, Key decisions, MVP scope (in/out), UX scenarios, Open questions.</span>
+        </div>
+      </div>
+      <a href="https://github.com/buckZz7/napkin/blob/main/SKILL.md" class="btn-secondary">View full skill</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>Got an idea?</h2>
+  <p>Say "napkin" to your agent. That's it.</p>
+  <a href="#get" class="btn-primary">Get Started</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">📝 Napkin</a>
+      <p>Turn ideas into clear docs. Give the skill to your agent, say napkin, ramble your idea. Your agent ships a doc ready to build.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#how">How It Works</a>
+        <a href="#get">Get Started</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="https://github.com/buckZz7/napkin">GitHub</a>
+        <a href="https://github.com/buckZz7/napkin/blob/main/NAPKIN.md">Napkin's own napkin</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    Napkin — Turn ideas into clear docs.
+  </div>
+</footer>
+
+</body>
+</html>
