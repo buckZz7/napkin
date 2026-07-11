@@ -34,7 +34,6 @@ nav .links a { color:#1a1a1a;text-decoration:none;font-size:0.9em;font-weight:50
 nav .links a:hover { color:#2563eb; }
 nav .cta { background:#2563eb;color:#fff;padding:7px 18px;border-radius:6px;text-decoration:none;font-size:0.85em;font-weight:600; }
 nav .cta:hover { background:#1d4ed8; }
-
 /* Hero */
 .hero { text-align:center;padding:160px 24px 60px;max-width:720px;margin:0 auto; }
 .hero h1 { font-family:'Caveat',cursive;font-size:4.2em;font-weight:700;line-height:1.1;margin-bottom:20px; }
@@ -105,9 +104,8 @@ footer .bottom { max-width:900px;margin:32px auto 0;padding-top:20px;border-top:
     <a href="/" class="logo">📝 Napkin</a>
     <div class="links">
       <a href="#how">How</a>
-      <a href="#get">Start</a>
       <a href="https://github.com/buckZz7/napkin">GitHub</a>
-      <a href="#get" class="cta">Start</a>
+      <a href="#get" class="cta">Get the skill</a>
     </div>
   </div>
 </nav>
@@ -153,8 +151,12 @@ footer .bottom { max-width:900px;margin:32px auto 0;padding-top:20px;border-top:
     <div class="get-step">
       <span class="get-badge blue">FOR AGENT USERS</span>
       <h3>Install the skill</h3>
-      <p>If your agent supports skills, install Napkin. Then just say "napkin" and your idea in any chat.</p>
-      <a href="https://github.com/buckZz7/napkin/blob/main/SKILL.md" class="btn btn-blue">Get the skill</a>
+      <p>If your agent supports skills, install Napkin with one command:</p>
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('npx add-skill buckZz7/napkin');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+        <div class="text"><span class="hl">npx add-skill buckZz7/napkin</span></div>
+      </div>
+      <p style="font-size:0.82em;color:#888;margin-top:-10px;">Works with Claude, Hermes, and any agent that supports the skill standard.</p>
     </div>
     <div class="get-divider"></div>
     <div class="get-step">
