@@ -6,7 +6,7 @@ Flow:
 2. Engine generates a question
 3. Maintainer LLM answers the same question (based on accumulated context)
 4. User answers
-5. Engine scores the gap between maintainer answer and user answer
+5. Engine scores the gap between maintainer prediction and user answer
 6. Gap feeds into next question generation
 7. Repeat until convergence (maintainer consistently predicts user)
 8. Generate napkin doc, create repo

@@ -63,7 +63,7 @@ def create_repo(idea, napkin_md, private=False, owner=None):
         # Write README.md
         readme_path = os.path.join(tmpdir, "README.md")
         with open(readme_path, "w") as f:
-            f.write(f"# {repo_name}\n\n{napkin_md.split(chr(10))[0].replace('#', '').strip()}\n\nSee [NAPKIN.md](NAPKIN.md) for the full project vision.\n")
+            f.write(f"# {repo_name}\n\nSee [NAPKIN.md](NAPKIN.md) for the full project vision.\n")
 
         # Create basic structure
         for d in ["src", "docs", "tests"]:

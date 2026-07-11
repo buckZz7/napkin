@@ -11,6 +11,9 @@ Usage:
 import sys
 import os
 
+# When installed as part of a skill, scripts are in the same dir
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from engine import run_convergence_loop
 from repo import create_repo
 
