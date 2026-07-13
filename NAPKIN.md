@@ -33,9 +33,9 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 - NAPKIN.md as the deliverable — structured to capture goals, decisions, and context, not just description
 - Decision-surfacing: the loop identifies what decisions exist in the project and captures the founder's preferences
 - Best-in-class default: the napkin guides agents toward the best possible outcome unless the founder specifies otherwise
-- Adaptive question style: infer the founder's type (feel-based vs specific) and adjust
-- Two output paths: push to GitHub repo (if connected) or give file to copy (if not)
-- Next-step guidance after shipping: "give this to your coding agent to build an MVP"
+- Adaptive question style: adapt questions to the project type, not a template
+- Two output paths: write file to disk or give content to copy
+- Next-step guidance after shipping: "give this to your coding agent to build from"
 - Skill-based interface (works in any agent chat — Telegram, Discord, Claude, ChatGPT)
 - Landing page with the skill/prompt to give to your agent
 
@@ -50,7 +50,7 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 
 ## UX scenarios
 
-1. **The shower idea:** You're walking to work and get an idea. You type "napkin tipping app for creators" into Telegram. Over your coffee break you answer a few questions — they flow naturally from your idea, not a checklist. The napkin infers you're non-technical and adjusts. It surfaces decisions you didn't know existed ("this needs real-time payments — here's what that means"). You say "ship it." You get a NAPKIN.md that orients your coding agent toward your vision. You paste it in and come back later to find it built — everything you wanted, nothing you didn't, with some surprises you love.
+1. **The shower idea:** You're walking to work and get an idea. You type "napkin tipping app for creators" into Telegram. Over your coffee break you answer a few questions — they flow naturally from your idea, not a checklist. Napkin infers you're non-technical and adjusts. It surfaces decisions you didn't know existed ("this needs real-time payments — here's what that means"). You say "ship it." You get a NAPKIN.md that orients your coding agent toward your vision. You paste it in and come back later to find it built.
 
 2. **The brain dump:** You've been thinking about something for weeks. You type "napkin" and paste three paragraphs. Napkin asks questions that force you to clarify what you actually mean. Some answers come easy, some you have to think about. The napkin is inferring your style, surfacing decisions, and mapping the goal. When it converges, the napkin doc says it better than your original brain dump did — and gives the building agent a clear target to aim for.
 
