@@ -23,7 +23,7 @@ def get_client():
         client = OpenAI()
     return client
 
-MODEL = os.environ.get("NAPKIN_MODEL", "gpt-4o")
+MODEL = os.environ.get("NAPKIN_MODEL", "gpt-4o-mini")
 
 # --- Prompts ---
 
