@@ -108,14 +108,7 @@ Tone, personality, aesthetic direction.
 
 ## Shipping
 
-```bash
-REPO_NAME=[slugified name]
-gh repo create $REPO_NAME --public --description "[idea]" --clone=false
-# Write NAPKIN.md, README.md, create src/ docs/
-# git init, add, commit, push
-```
-
-Default to public for Buck (buckZz7), private for others. Return the repo URL.
+Show the user the NAPKIN.md preview. Ask "Ship it?" If yes, give them the file to hand to their coding agent. That's it — Napkin's job is done.
 
 ## Principles
 
