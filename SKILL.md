@@ -1,14 +1,6 @@
 ---
 name: napkin
 description: Turn ideas into launchpads your agent can actually build from.
-version: 2.2.0
-author: Buck
-license: MIT
-platforms: [linux, macos, windows]
-metadata:
-  hermes:
-    tags: [napkin, ideas, repo, mvp, convergence, agent]
-    category: creative
 ---
 
 # Napkin — Turn ideas into launchpads
