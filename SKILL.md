@@ -1,6 +1,7 @@
 ---
 name: napkin
 description: Turn ideas into launchpads your agent can actually build from.
+license: MIT
 ---
 
 # Napkin — Turn ideas into launchpads
