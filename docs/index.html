@@ -3,294 +3,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Napkin</title>
-<meta name="description" content="Say napkin to your agent. Ramble your idea. It asks questions until it gets it. Then you have a doc ready to build from.">
+<title>Napkin — Turn ideas into launchpads</title>
+<meta name="description" content="Describe your idea. Napkin asks the right questions. You get a doc that orients your agent toward the best possible version of your vision.">
+<meta name="theme-color" content="#1a1815" id="theme-color-meta">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t=localStorage.getItem('napkin-theme');
+  if(!t)t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  var meta=document.getElementById('theme-color-meta');
+  if(meta)meta.content=t==='dark'?'#1a1815':'faf8f5';
+  document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
 <style>
 :root {
-  --bg:#fdfcfa;
-  --bg-card:#fff;
-  --bg-prompt:#fdfcfa;
-  --text:#2c2c2c;
-  --text-secondary:#555;
-  --text-tertiary:#888;
-  --border:#2c2c2c;
-  --border-light:#ddd;
-  --border-dashed:#aaa;
-  --accent:#2563eb;
-  --accent-dark:#1d4ed8;
-  --accent-bg:#eff6ff;
-  --green-bg:#f0fdf4;
-  --green-text:#16a34a;
-  --footer-line:#ccc;
+  --bg:#faf8f5; --bg-card:#fff; --bg-elevated:#f5f2ee;
+  --text:#1a1a1a; --text-secondary:#555; --text-tertiary:#999;
+  --border:#e8e4df; --border-strong:#d4cfc8;
+  --accent:#c8651a; --accent-hover:#b05618; --accent-soft:#fdf0e6;
+  --code-bg:#f5f2ee; --code-border:#e0dcd6;
+  --green-soft:#f0fdf4; --green:#16a34a;
+  --yellow-soft:#fef3c7; --yellow:#d97706;
 }
 [data-theme="dark"] {
-  --bg:#1a1815;
-  --bg-card:#252320;
-  --bg-prompt:#1f1d1a;
-  --text:#f0ece4;
-  --text-secondary:#a8a39a;
-  --text-tertiary:#7a756c;
-  --border:#f0ece4;
-  --border-light:#3a3833;
-  --border-dashed:#555048;
-  --accent:#5b8def;
-  --accent-dark:#4a7ad0;
-  --accent-bg:rgba(91,141,239,0.12);
-  --green-bg:rgba(22,163,74,0.12);
-  --green-text:#4ade80;
-  --footer-line:#3a3833;
+  --bg:#1a1815; --bg-card:#252320; --bg-elevated:#2a2622;
+  --text:#f0ece4; --text-secondary:#a8a39a; --text-tertiary:#6a655e;
+  --border:#3a3530; --border-strong:#4a4540;
+  --accent:#e8853a; --accent-hover:#f09648; --accent-soft:rgba(232,133,58,.12);
+  --code-bg:#1f1d1a; --code-border:#3a3530;
+  --green-soft:rgba(22,163,74,.12); --green:#4ade80;
+  --yellow-soft:rgba(217,119,6,.12); --yellow:#fbbf24;
 }
-
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  font-family:'Patrick Hand','Inter',system-ui,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.7;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  transition:background 0.2s,color 0.2s;
-}
-.hw { font-family:'Caveat',cursive; }
-.body-font { font-family:'Inter',system-ui,sans-serif; }
-
-/* Hand-drawn border using SVG */
-.sketch-border {
-  border:2px solid #2c2c2c;
-  border-radius:12px 8px 14px 10px / 10px 14px 8px 12px;
-}
-.sketch-border-light {
-  border:1.5px solid #888;
-  border-radius:10px 14px 8px 12px / 12px 8px 14px 10px;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .2s,color .2s}
+.serif{font-family:'Instrument Serif',Georgia,serif}
+.mono{font-family:'SF Mono','JetBrains Mono','Fira Code',monospace}
+a{color:inherit}
 
 /* Nav */
-nav {
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:color-mix(in srgb,var(--bg) 90%,transparent);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-bottom:1.5px solid var(--border);
-}
-nav .inner { max-width:780px;margin:0 auto;padding:12px 24px;display:flex;justify-content:space-between;align-items:center; }
-.logo { font-family:'Caveat',cursive;font-size:1.8em;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:4px;line-height:1; }
-nav .links { display:flex;gap:20px;align-items:center; }
-nav .links a { color:var(--text);text-decoration:none;font-size:1.05em;font-weight:400; }
-nav .links a:hover { color:var(--accent); }
-nav .cta {
-  background:var(--accent);color:#fff;padding:6px 18px;
-  border-radius:8px 6px 10px 4px / 4px 10px 6px 8px;
-  text-decoration:none;font-size:0.95em;font-weight:500;
-  border:1.5px solid var(--accent-dark);
-}
-nav .cta:hover { background:var(--accent-dark); }
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+nav .inner{max-width:820px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);font-weight:700;font-size:1.05em}
+.logo svg{flex-shrink:0}
+nav .links{display:flex;gap:24px;align-items:center}
+nav .links a{color:var(--text-secondary);text-decoration:none;font-size:.92em;font-weight:500;transition:color .15s}
+nav .links a:hover{color:var(--text)}
+.icon-btn{background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:6px;border-radius:8px;display:flex;align-items:center;transition:all .15s}
+.icon-btn:hover{background:var(--bg-elevated);color:var(--text)}
+.nav-cta{background:var(--text);color:var(--bg);padding:7px 16px;border-radius:8px;text-decoration:none;font-size:.88em;font-weight:600;transition:opacity .15s}
+.nav-cta:hover{opacity:.85}
 
-/* Theme toggle */
-.theme-toggle {
-  background:none;border:1.5px solid var(--border);color:var(--text);
-  font-size:1.1em;cursor:pointer;padding:2px 10px;
-  border-radius:6px 8px 4px 10px / 10px 4px 8px 6px;
-  font-family:'Patrick Hand',sans-serif;line-height:1.4;
-}
-.theme-toggle:hover { border-color:var(--accent);color:var(--accent); }
+/* Container */
+.container{max-width:820px;margin:0 auto;padding:0 24px}
 
 /* Hero */
-.hero { text-align:center;padding:140px 24px 40px;max-width:680px;margin:0 auto; }
-.hero .doodle { font-size:3em;margin-bottom:-10px; }
-.hero h1 { font-family:'Caveat',cursive;font-size:4.5em;font-weight:700;line-height:1.05;margin-bottom:16px; }
-.hero h1 .blue { color:var(--accent); }
-.hero p { font-size:1.15em;color:var(--text-secondary);margin-bottom:32px;max-width:440px;margin-left:auto;margin-right:auto; }
-.hero .btns { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
-.btn { display:inline-block;padding:10px 24px;font-weight:500;font-size:1em;text-decoration:none;transition:all 0.15s; }
-.btn-blue { background:var(--accent);color:#fff;border:1.5px solid var(--accent-dark);border-radius:8px 6px 10px 4px / 4px 10px 6px 8px; }
-.btn-blue:hover { background:var(--accent-dark); }
-.btn-outline { border:1.5px solid var(--border);color:var(--text);background:transparent;border-radius:10px 8px 12px 6px / 6px 12px 8px 10px; }
-.btn-outline:hover { border-color:var(--accent);color:var(--accent); }
-
-/* Arrow doodle */
-.arrow-down { text-align:center;font-size:1.5em;color:var(--text-tertiary);margin:20px 0; }
-
-/* How */
-.how { max-width:680px;margin:0 auto;padding:40px 24px; }
-.how h2 { font-family:'Caveat',cursive;font-size:3em;text-align:center;margin-bottom:32px; }
-.step { display:flex;gap:16px;margin-bottom:28px;align-items:flex-start; }
-.step .num { font-family:'Caveat',cursive;font-size:2.4em;color:var(--accent);line-height:1;min-width:44px; }
-.step .body h3 { font-family:'Caveat',cursive;font-size:1.6em;font-weight:700;margin-bottom:4px; }
-.step .body p { color:var(--text-secondary);font-size:1em; }
-
-/* Get */
-.get { max-width:600px;margin:0 auto;padding:40px 24px; }
-.get h2 { font-family:'Caveat',cursive;font-size:3em;text-align:center;margin-bottom:8px; }
-.get .sub { text-align:center;color:var(--text-secondary);margin-bottom:32px;font-size:1.05em; }
-.get-card { background:var(--bg-card); border:2px solid var(--border); border-radius:14px 10px 16px 8px / 8px 16px 10px 14px; overflow:hidden; }
-.get-step { padding:28px; }
-.get-divider { height:1.5px;background:var(--border-light);margin:0 28px; }
-.get-badge { display:inline-block;padding:3px 12px;border-radius:9999px;font-size:0.9em;font-weight:500;margin-bottom:14px; }
-.get-badge.blue { background:var(--accent-bg);color:var(--accent); }
-.get-badge.green { background:var(--green-bg);color:var(--green-text); }
-.get-step h3 { font-family:'Caveat',cursive;font-size:1.6em;font-weight:700;margin-bottom:8px; }
-.get-step p { color:var(--text-secondary);font-size:1em;margin-bottom:16px; }
-
-.prompt-box { background:var(--bg-prompt);border:1.5px dashed var(--border-dashed);border-radius:8px 6px 10px 4px / 4px 10px 6px 8px;margin-bottom:16px;padding:16px; }
-.prompt-box .text { font-family:'Inter',sans-serif;font-size:0.86em;color:var(--text-secondary);line-height:1.7; }
-.prompt-box .hl { color:var(--accent);font-family:'JetBrains Mono','Inter',monospace;font-size:0.85em; }
-.copy-btn { background:var(--bg-card);border:1.5px solid var(--border);color:var(--text);padding:5px 16px;border-radius:6px 8px 4px 10px / 10px 4px 8px 6px;font-size:0.9em;font-weight:500;cursor:pointer;margin-bottom:10px;font-family:'Patrick Hand',sans-serif; }
-.copy-btn:hover { border-color:var(--accent);color:var(--accent); }
-
-/* CTA */
-.cta { text-align:center;padding:50px 24px; }
-.cta h2 { font-family:'Caveat',cursive;font-size:3.2em;margin-bottom:12px; }
-.cta p { color:var(--text-secondary);margin-bottom:20px;font-size:1.05em; }
-
-/* Footer */
-footer { border-top:1.5px solid var(--border);padding:32px 24px; }
-footer .inner { max-width:780px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px; }
-footer .brand p { color:var(--text-tertiary);font-size:0.95em;max-width:280px;margin-top:8px; }
-footer .links { display:flex;gap:40px; }
-footer .col h4 { font-family:'Caveat',cursive;font-size:1.2em;font-weight:700;margin-bottom:6px; }
-footer .col a { display:block;color:var(--text);text-decoration:none;font-size:0.95em;padding:2px 0; }
-footer .col a:hover { color:var(--accent); }
-footer .bottom { max-width:780px;margin:24px auto 0;padding-top:16px;border-top:1px dashed var(--footer-line);text-align:center;color:var(--text-tertiary);font-size:0.9em; }
-
-@media (max-width:768px) {
-  .hero h1 { font-size:3.2em; }
-  .hero p { font-size:1em; }
-  nav .links a:not(.cta) { display:none; }
-  footer .links { gap:24px; }
-}
+.hero{text-align:center;padding:130px 24px 60px;max-width:680px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:var(--accent-soft);color:var(--accent);border-radius:100px;font-size:.82em;font-weight:600;margin-bottom:24px}
+.hero h1{font-size:3.2em;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px}
+.hero h1 .accent{color:var(--accent)}
+.hero h1 .serif-em{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
+.hero p{font-size:1.1em;color:var(--text-secondary);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.65}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;font-weight:600;font-size:.95em;text-decoration:none;border-radius:10px;transition:all .15s;border:none;cursor:pointer;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border-strong)}
+.btn-ghost:hover{border-color:var(--text-secondary);background:var(--bg-elevated)}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="inner">
-    <a href="/" class="logo">📝 Napkin</a>
+    <a href="/" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l-2 5h6l-2-5"/><path d="M14 3l2 5h4l-2-5z"/><path d="M6 3L4 8h4l2-5z"/><path d="M4 8l-1 4h18l-1-4"/><path d="M3 12l1.5 9h15L21 12"/><path d="M9 16h6"/></svg>
+      Napkin
+    </a>
     <div class="links">
-      <a href="#how">How</a>
+      <a href="#how">How it works</a>
       <a href="https://github.com/buckZz7/napkin">GitHub</a>
-      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-      <script>
-      function getTheme() {
-        return localStorage.getItem('napkin-theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      }
-      function applyTheme() {
-        var t = getTheme();
-        document.documentElement.setAttribute('data-theme', t);
-        var btn = document.querySelector('.theme-toggle');
-        if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
-      }
-      function toggleTheme() {
-        var current = document.documentElement.getAttribute('data-theme') || 'light';
-        var next = current === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('napkin-theme', next);
-        applyTheme();
-      }
-      applyTheme();
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
-        if (!localStorage.getItem('napkin-theme')) applyTheme();
-      });
-      </script>
-      <a href="#get" class="cta">Get the skill</a>
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn"></button>
+      <a href="#get" class="nav-cta">Get the skill</a>
     </div>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="doodle">✍️</div>
-  <h1>Got an idea?<br><span class="blue">Sketch it out.</span></h1>
-  <p class="body-font">Say "napkin" to your agent and start talking. It asks you questions until it gets what you mean. Then you have a doc ready to hand to any tool and build.</p>
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    For founders with ideas and agents to build them
+  </div>
+  <h1>Turn ideas into <span class="accent">launchpads</span><br>your agent can <span class="serif-em">actually build from.</span></h1>
+  <p>Describe your idea. Napkin asks the right questions until it gets your vision. You get a doc that doesn't just describe what you want — it orients your agent toward the best possible version of it.</p>
   <div class="btns">
-    <a href="#get" class="btn btn-blue">Get the skill</a>
-    <a href="https://github.com/buckZz7/napkin" class="btn btn-outline">GitHub</a>
+    <a href="#get" class="btn btn-primary">Get the skill</a>
+    <a href="#how" class="btn btn-ghost">How it works</a>
   </div>
 </div>
 
-<div class="arrow-down">↓</div>
+<style>
+/* Sections */
+.section{padding:60px 0}
+.section-title{font-size:1.9em;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.section-sub{color:var(--text-secondary);font-size:1.05em;margin-bottom:40px;max-width:500px}
 
-<div class="how" id="how">
-  <h2>How it works</h2>
-  <div class="step">
-    <div class="num">1</div>
-    <div class="body">
-      <h3>Give your agent the skill</h3>
-      <p class="body-font">If your agent can load skills (Hermes, Claude Code, Cursor, Codex, OpenCode), install Napkin. If not, there's a prompt you can copy into any chat.</p>
-    </div>
-  </div>
-  <div class="step">
-    <div class="num">2</div>
-    <div class="body">
-      <h3>Say "napkin" and start talking</h3>
-      <p class="body-font">Type your idea. Three words or three paragraphs, doesn't matter. Your agent asks you questions to figure out what you actually mean.</p>
-    </div>
-  </div>
-  <div class="step">
-    <div class="num">3</div>
-    <div class="body">
-      <h3>Ship it</h3>
-      <p class="body-font">When your agent gets your vision, it writes it up as a doc. You say "ship it" and it goes to a repo or gives you the file to take anywhere.</p>
-    </div>
-  </div>
-</div>
+/* How it works */
+.how-grid{display:flex;flex-direction:column;gap:0}
+.how-step{display:flex;gap:20px;padding:28px 0;border-top:1px solid var(--border)}
+.how-step:last-child{border-bottom:1px solid var(--border)}
+.how-step .num{font-family:'Instrument Serif',Georgia,serif;font-size:2em;color:var(--accent);line-height:1;min-width:48px;flex-shrink:0}
+.how-step h3{font-size:1.15em;font-weight:700;margin-bottom:6px}
+.how-step p{color:var(--text-secondary);font-size:.95em;line-height:1.6}
 
-<div class="get" id="get">
-  <h2>Get started</h2>
-  <p class="sub">Three ways in. Whatever you're already using.</p>
-  <div class="get-card">
-    <div class="get-step">
-      <span class="get-badge blue">FOR AGENT USERS</span>
-      <h3>Install the skill</h3>
-      <p>If you use an agent with skill support (Hermes, Claude Code, Cursor, Codex, OpenCode), one command:</p>
-      <div class="prompt-box">
-        <button class="copy-btn" onclick="navigator.clipboard.writeText('npx skills add buckZz7/napkin');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
-        <div class="text"><span class="hl">npx skills add buckZz7/napkin</span></div>
+/* Example */
+.example-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.example-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.example-dot{width:10px;height:10px;border-radius:50%;background:var(--border-strong)}
+.example-dot.r{background:#ff5f57}
+.example-dot.y{background:#ffbd2e}
+.example-dot.g{background:#28c840}
+.example-name{font-size:.82em;color:var(--text-tertiary);margin-left:8px;font-weight:500}
+.example-body{padding:20px 24px}
+.example-body pre{font-family:'SF Mono',monospace;font-size:.82em;line-height:1.65;color:var(--text-secondary);white-space:pre-wrap}
+.example-body .md-h{color:var(--text);font-weight:700}
+.example-body .md-accent{color:var(--accent)}
+</style>
+
+<!-- HOW IT WORKS -->
+<div class="container" id="how">
+  <div class="section">
+    <h2 class="section-title">How it works</h2>
+    <p class="section-sub">Three steps from idea to something your agent can build without asking you anything else.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="num">1</div>
+        <div>
+          <h3>Give your agent the skill</h3>
+          <p>If your agent supports skills (Hermes, Claude Code, Cursor, Codex, OpenCode), one command. If not, there's a prompt you can paste into any LLM.</p>
+        </div>
       </div>
-    </div>
-    <div class="get-divider"></div>
-    <div class="get-step">
-      <span class="get-badge green">FOR CHATGPT / CLAUDE CHAT / ANY LLM</span>
-      <h3>Copy the prompt</h3>
-      <p>No skill support? Paste this into ChatGPT, Claude, or any LLM.</p>
-      <div class="prompt-box">
-        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('np').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
-        <div class="text" id="np">
-You are Napkin. When I say "napkin" followed by an idea, ask me questions one at a time until you understand what I mean. Before I answer each one, predict what I'd say. After I answer, score how close you were (0=exact, 1=wrong). If you're way off, ask about that area again. When you can predict my answers consistently, write up the idea as a doc with: what it is, who it's for, brand feel, key decisions, MVP scope, UX scenarios, and open questions. Then ask "ship it?" Keep it conversational. Don't push back or suggest. Just understand.
+      <div class="how-step">
+        <div class="num">2</div>
+        <div>
+          <h3>Say "napkin" and start talking</h3>
+          <p>Type your idea. Three words or three paragraphs. Napkin asks questions until it understands what you mean — inferring what you don't say, confirming when it's unsure, surfacing decisions you didn't know existed.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="num">3</div>
+        <div>
+          <h3>Ship it</h3>
+          <p>Napkin writes up your vision as a NAPKIN.md — not just a description, but a launchpad that orients your agent toward the best possible version. Hand it to your coding agent and come back to something better than you imagined.</p>
         </div>
       </div>
     </div>
-    <div class="get-divider"></div>
-    <div class="get-step">
-      <span class="get-badge" style="background:#fef3c7;color:#d97706;">FOR CLI USERS</span>
-      <h3>Run it in your terminal</h3>
-      <p>Clone and run standalone:</p>
-      <div class="prompt-box">
-        <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/buckZz7/napkin.git && cd napkin && uv venv && source .venv/bin/activate && uv pip install openai && python cli.py');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
-        <div class="text"><span class="hl">git clone https://github.com/buckZz7/napkin.git<br>cd napkin<br>uv venv && source .venv/bin/activate<br>uv pip install openai<br>export OPENAI_API_KEY=your-key<br>python cli.py "your idea"</span></div>
+  </div>
+</div>
+
+<!-- WHAT MAKES IT DIFFERENT -->
+<div class="container">
+  <div class="section">
+    <h2 class="section-title">What makes it different</h2>
+    <p class="section-sub">Napkin doesn't just capture your idea. It captures the goals behind it — so your agent can make the right calls when it hits a fork in the road.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <div>
+          <h3>Surfaces decisions, not just descriptions</h3>
+          <p>If your project needs a specific framework, protocol, or design approach, Napkin identifies that decision during the conversation — not after your agent has already built halfway with the wrong foundation.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div>
+          <h3>Best-in-class by default</h3>
+          <p>Unless you say otherwise, Napkin guides your agent to aim for the best possible outcome. Say "chat app" and your agent already knows what a great chat app looks like — and builds toward that.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <div>
+          <h3>Adapts to you</h3>
+          <p>Some founders describe by feel. Some by specifics. Napkin infers your style from how you talk and adjusts — never asking when it can reasonably figure it out on its own.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="cta">
-  <h2>What's your idea?</h2>
-  <p class="body-font">Say "napkin" to your agent.</p>
-  <a href="#get" class="btn btn-blue">Get the skill</a>
+<!-- EXAMPLE -->
+<div class="container">
+  <div class="section">
+    <h2 class="section-title">What you get</h2>
+    <p class="section-sub">A NAPKIN.md that orients your agent's entire reasoning process — not a spec, but a launchpad.</p>
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-dot r"></div>
+        <div class="example-dot y"></div>
+        <div class="example-dot g"></div>
+        <span class="example-name">NAPKIN.md</span>
+      </div>
+      <div class="example-body">
+<pre><span class="md-h"># Tipping App</span>
+
+<span class="md-h">## What this is</span>
+A lightweight tipping app for creators. Fans send 
+value directly — no middleman, no 10% cut.
+
+<span class="md-h">## Key decisions</span>
+<span class="md-accent">- Payment rail: Lightning Network (not Stripe) — 
+  instant, global, micropayment-friendly</span>
+<span class="md-accent">- Framework: Svelte — real-time balance updates 
+  need reactive rendering, not full DOM rebuilds</span>
+- No account required to tip. Creators claim with 
+  their Lightning address.
+
+<span class="md-h">## UX scenarios</span>
+1. Fan lands on creator's page, enters amount, 
+   taps send. Done in 10 seconds.
+2. Creator sees incoming tip in real-time, 
+   no refresh needed.</pre>
+      </div>
+    </div>
+  </div>
 </div>
 
+<style>
+/* Install */
+.install-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.install-row{padding:28px 32px}
+.install-row+.install-row{border-top:1px solid var(--border)}
+.install-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.78em;font-weight:600;margin-bottom:14px}
+.install-badge.blue{background:var(--accent-soft);color:var(--accent)}
+.install-badge.green{background:var(--green-soft);color:var(--green)}
+.install-badge.yellow{background:var(--yellow-soft);color:var(--yellow)}
+.install-row h3{font-size:1.1em;font-weight:700;margin-bottom:8px}
+.install-row p{color:var(--text-secondary);font-size:.92em;margin-bottom:14px}
+.code-box{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.code-box code{font-family:'SF Mono','JetBrains Mono',monospace;font-size:.82em;color:var(--text);flex:1;word-break:break-all}
+.copy-btn{background:none;border:1px solid var(--border-strong);color:var(--text-secondary);padding:5px 12px;border-radius:6px;font-size:.8em;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* CTA */
+.cta-section{text-align:center;padding:80px 24px 60px}
+.cta-section h2{font-size:2.2em;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.cta-section p{color:var(--text-secondary);margin-bottom:24px;font-size:1.05em}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:40px 24px}
+footer .inner{max-width:820px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px}
+footer .brand-logo{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:8px}
+footer .brand p{color:var(--text-tertiary);font-size:.88em;max-width:280px}
+footer .links{display:flex;gap:40px}
+footer .col h4{font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;color:var(--text-tertiary)}
+footer .col a{display:block;color:var(--text-secondary);text-decoration:none;font-size:.92em;padding:3px 0;transition:color .15s}
+footer .col a:hover{color:var(--text)}
+footer .bottom{max-width:820px;margin:32px auto 0;padding-top:20px;border-top:1px solid var(--border);text-align:center;color:var(--text-tertiary);font-size:.85em}
+
+@media(max-width:640px){
+  .hero h1{font-size:2.2em}
+  .hero{padding:100px 20px 40px}
+  nav .links a:not(.nav-cta){display:none}
+  .section-title{font-size:1.5em}
+  footer .links{gap:24px}
+}
+</style>
+
+<!-- GET STARTED -->
+<div class="container" id="get">
+  <div class="section">
+    <h2 class="section-title">Get started</h2>
+    <p class="section-sub">Three ways in. Whatever you're already using.</p>
+    <div class="install-card">
+      <div class="install-row">
+        <span class="install-badge blue">FOR AGENT USERS</span>
+        <h3>Install the skill</h3>
+        <p>If you use an agent with skill support (Hermes, Claude Code, Cursor, Codex, OpenCode):</p>
+        <div class="code-box">
+          <code>npx skills add buckZz7/napkin</code>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('npx skills add buckZz7/napkin');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+        </div>
+      </div>
+      <div class="install-row">
+        <span class="install-badge green">FOR CHATGPT / CLAUDE / ANY LLM</span>
+        <h3>Copy the prompt</h3>
+        <p>No skill support? Paste this into any LLM:</p>
+        <div class="code-box">
+          <code style="font-size:.72em;white-space:pre-wrap;line-height:1.5">You are Napkin. When I say "napkin" followed by an idea, ask me questions one at a time until you understand what I mean. Before I answer, predict what I'd say. After I answer, score how close you were. When you can predict my answers consistently, write up the idea as a doc with: what it is, who it's for, brand feel, key decisions, MVP scope, UX scenarios, and open questions. Then ask "ship it?"</code>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('np').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+        </div>
+        <span id="np" style="display:none">You are Napkin. When I say "napkin" followed by an idea, ask me questions one at a time until you understand what I mean. Before I answer, predict what I'd say. After I answer, score how close you were. When you can predict my answers consistently, write up the idea as a doc with: what it is, who it's for, brand feel, key decisions, MVP scope, UX scenarios, and open questions. Then ask "ship it?"</span>
+      </div>
+      <div class="install-row">
+        <span class="install-badge yellow">FOR CLI USERS</span>
+        <h3>Run it in your terminal</h3>
+        <p>Clone and run standalone:</p>
+        <div class="code-box">
+          <code>git clone https://github.com/buckZz7/napkin.git && cd napkin && python cli.py "your idea"</code>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/buckZz7/napkin.git && cd napkin && python cli.py');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>What's your idea?</h2>
+  <p>Say "napkin" to your agent. Come back to something better than you imagined.</p>
+  <a href="#get" class="btn btn-primary">Get the skill</a>
+</div>
+
+<!-- FOOTER -->
 <footer>
   <div class="inner">
     <div class="brand">
-      <a href="/" class="logo">📝 Napkin</a>
-      <p>Say napkin to your agent. Ramble your idea. Get a doc ready to build.</p>
+      <div class="brand-logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l-2 5h6l-2-5"/><path d="M14 3l2 5h4l-2-5z"/><path d="M6 3L4 8h4l2-5z"/><path d="M4 8l-1 4h18l-1-4"/><path d="M3 12l1.5 9h15L21 12"/><path d="M9 16h6"/></svg>
+        Napkin
+      </div>
+      <p>Turn ideas into launchpads your agent can build from.</p>
     </div>
     <div class="links">
       <div class="col">
         <h4>Product</h4>
-        <a href="#how">How</a>
-        <a href="#get">Start</a>
+        <a href="#how">How it works</a>
+        <a href="#get">Get started</a>
       </div>
       <div class="col">
         <h4>Resources</h4>
@@ -299,8 +343,16 @@ You are Napkin. When I say "napkin" followed by an idea, ask me questions one at
       </div>
     </div>
   </div>
-  <div class="bottom">Made on a napkin 📝</div>
+  <div class="bottom">Built by founders, for founders.</div>
 </footer>
+
+<script>
+function getTheme(){return localStorage.getItem('napkin-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}
+function applyTheme(){var t=getTheme();document.documentElement.setAttribute('data-theme',t);var btn=document.getElementById('themeBtn');if(btn)btn.innerHTML=t==='dark'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'}
+function toggleTheme(){var current=document.documentElement.getAttribute('data-theme')||'light';var next=current==='dark'?'light':'dark';localStorage.setItem('napkin-theme',next);applyTheme()}
+applyTheme();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(!localStorage.getItem('napkin-theme'))applyTheme()});
+</script>
 
 </body>
 </html>
