@@ -2,21 +2,22 @@
 
 ## What this is
 
-A framework to measure whether NAPKIN.md docs actually produce better builds. The core question: if you give two agents the same build task, one with a napkin and one without, does the napkin agent's output come out noticeably better?
+A regression testing framework for the Napkin skill. Every time the convergence loop changes — new question strategy, different gap thresholds, format tweaks, prompt adjustments — the eval measures whether the change produced better or worse docs that lead to better or worse builds.
 
-This isn't about testing the convergence loop mechanics (predictions, gap scores, exam). That's internal. This is about testing the *output* — whether the doc itself helps.
+This is not "does Napkin work?" That's a one-time question. This is "did this change improve Napkin?" That's the question that matters for iterating on the skill.
 
 ## Why it matters
 
-The convergence loop can agree on vibes and still produce a mediocre doc. The only way to know if the napkin actually helps is to test it against a world without it. This framework makes that test repeatable.
+The convergence loop has many tunable parameters: question strategy, gap scoring thresholds, convergence detection, exam format, NAPKIN.md structure. Each change is a hypothesis — "asking about visual references earlier will produce better docs." Without measurement, you're guessing. With measurement, you're iterating.
+
+The framework turns skill development from "I think this is better" into "this change improved decision coverage by 12% but increased false convergence by 3%."
 
 ## How it works
 
 ### 1. Ground truth pool
 
-A set of documented projects with known outcomes — real repos with READMEs, docs, and working code. These serve as the reference for what "good" looks like.
+A set of documented projects with known good outcomes — real repos with READMEs, working code, and clear decisions. These are the reference for what "good" looks like.
 
-Each ground truth entry:
 ```json
 {
   "id": "tipping-app",
@@ -27,16 +28,25 @@ Each ground truth entry:
 }
 ```
 
-### 2. The two-agent test
+### 2. The two-agent build test
 
 For each ground truth:
 
-1. **Napkin agent**: An agent runs the convergence loop with a "founder" (LLM role-playing based on the ground truth). It produces a NAPKIN.md.
-2. **Control agent**: An agent gets the same idea with no convergence loop — just a one-shot description. It produces a plain doc.
-3. **Build phase**: Two fresh agents get the same build task — one gets the NAPKIN.md, one gets the plain doc. Both build.
-4. **Compare**: Score both builds against the ground truth.
+1. **Founder simulation**: An LLM role-plays as the founder based on the ground truth. It describes the idea as if it just came to them.
+2. **Napkin convergence**: The Napkin skill (current version) runs the convergence loop with the simulated founder. Produces a NAPKIN.md.
+3. **Build phase**: A fresh agent gets the NAPKIN.md and a build task. It builds the project.
+4. **Score the build**: Compare the build against the ground truth.
 
-### 3. Metrics
+### 3. A/B testing changes
+
+To test whether a change to the skill improves results:
+
+1. Run the full test with the **current skill** (baseline) across all ground truths.
+2. Make your change to the skill.
+3. Run the full test with the **changed skill** (candidate) across the same ground truths.
+4. Compare metrics. If the candidate scores better across the board, ship the change. If it regresses on any metric, decide whether the tradeoff is worth it.
+
+### 4. Metrics
 
 | Metric | What it measures |
 |--------|-----------------|
@@ -44,22 +54,24 @@ For each ground truth:
 | Architecture match | Did the build use the right architecture (framework, protocol, etc.)? |
 | UX scenario coverage | Can the build handle the UX scenarios from the ground truth? |
 | Rework cycles | How many rounds of "that's not what I meant" did the builder need? |
-| False convergence | Did the napkin agree on something the founder didn't actually want? |
+| False convergence | Did the napkin converge on something the founder didn't actually want? |
 | Missing features | How much of the ground truth was missed entirely? |
+| Rounds to convergence | How many questions did it take? (Fewer is better if quality holds) |
 
-### 4. Similarity scoring
+### 5. Similarity scoring
 
 Two approaches, use both:
 
-- **Embedding similarity**: Convert the NAPKIN.md and the ground truth docs to vector embeddings, compute cosine similarity. Quick numeric score.
+- **Embedding similarity**: Convert the NAPKIN.md and the ground truth docs to vector embeddings, compute cosine similarity. Quick numeric score for trend tracking.
 - **LLM comparison**: Feed both docs to an LLM and ask "how well does this napkin doc match this product's actual docs?" Returns a score + qualitative breakdown of where they diverge.
 
 ## Implementation status
 
-**Not yet built.** This is the next thing to build after the skill is stable. The concept is proven — the convergence loop works, the docs are good — but we need to measure it to improve it.
+**Design phase.** Not yet built. The skill needs to be stable before building the eval — there's no point measuring changes to a moving target.
 
 ## What this is NOT
 
-- Not a test of the convergence loop mechanics (that's internal)
-- Not a CI/CD pipeline — it's a research tool
-- Not required to use Napkin — it's for improving Napkin
+- Not a test of "does Napkin work" — that's a one-time validation
+- Not a CI/CD pipeline — it's a research and iteration tool
+- Not required to use Napkin — it's for improving the skill
+- Not part of the skill itself — the skill doesn't know about the eval
