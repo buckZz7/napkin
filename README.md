@@ -81,7 +81,7 @@ napkin/
 ├── docs/
 │   └── index.html    # Landing page
 ├── eval/
-│   └── README.md     # Evaluation framework design (two-agent test)
+│   └── README.md     # Evaluation framework — regression test for skill changes
 └── LICENSE           # MIT
 ```
 

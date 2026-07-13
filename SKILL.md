@@ -285,14 +285,14 @@ Tone, personality, aesthetic direction.
    ```bash
    REPO_NAME=[slugified name]
    gh repo create $REPO_NAME --public --description "[idea]" --clone=false
-   # Write NAPKIN.md, README.md, create src/ docs/ tests/
+   # Write NAPKIN.md, README.md, create src/ docs/
    # git init, add, commit, push
    ```
 
 2. Default to public for Buck (buckZz7), private for others.
 3. Return the repo URL.
 
-## Three install paths
+## Two install paths
 
 When shipping the landing page or telling users how to get Napkin, there
 are two paths:
@@ -405,10 +405,11 @@ The landing page should show both paths clearly with copy buttons.
   isn't "do you want Svelte?" — it's "will this app have real-time
   updates, chat, or interactive UI that needs to feel smooth?" and then
   Napkin notes the decision.
-- **Napkin is for every handoff in the chain.** The same gap between
+- **The convergence loop applies to every handoff.** The same gap between
   founder and builder exists between agent and subagent, maintainer and
-  contributor. Every delegation is a mini-napkin. The convergence loop
-  makes the implicit explicit for the entire chain.
+  contributor. The convergence loop pattern — predict, score, adjust —
+  makes the implicit explicit for any delegation, not just
+  founder-to-builder.
 - **No personal or project-specific details leak.** When translating
   lessons from real projects into the Napkin skill, abstract the lesson
   away from the specific project. The agent picking up the napkin doesn't
