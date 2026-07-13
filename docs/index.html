@@ -61,7 +61,7 @@ nav .links a:hover{color:var(--text)}
 
 /* Hero */
 .hero{text-align:center;padding:130px 24px 60px;max-width:680px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:var(--accent-soft);color:var(--accent);border-radius:100px;font-size:.82em;font-weight:600;margin-bottom:24px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:var(--bg-elevated);color:var(--text-secondary);border-radius:100px;font-size:.82em;font-weight:600;margin-bottom:24px}
 .hero h1{font-size:3.2em;font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px}
 .hero h1 .accent{color:var(--accent)}
 .hero h1 .serif-em{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
@@ -91,7 +91,7 @@ nav .links a:hover{color:var(--text)}
 <!-- HERO -->
 <div class="hero">
   <div class="hero-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.5.4 1 .8 1 1.3h6c0-.5.5-.9 1-1.3A7 7 0 0 0 12 2z"/></svg>
     For founders with ideas and agents to build them
   </div>
   <h1>Turn ideas into <span class="accent">launchpads</span><br>your agent can <span class="serif-em">actually build from.</span></h1>
@@ -168,21 +168,21 @@ nav .links a:hover{color:var(--text)}
     <p class="section-sub">Napkin doesn't just capture your idea. It captures the goals behind it — so your agent can make the right calls when it hits a fork in the road.</p>
     <div class="how-grid">
       <div class="how-step">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         <div>
           <h3>Surfaces decisions, not just descriptions</h3>
           <p>If your project needs a specific framework, protocol, or design approach, Napkin identifies that decision during the conversation — not after your agent has already built halfway with the wrong foundation.</p>
         </div>
       </div>
       <div class="how-step">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         <div>
           <h3>Best-in-class by default</h3>
           <p>Unless you say otherwise, Napkin guides your agent to aim for the best possible outcome. Say "chat app" and your agent already knows what a great chat app looks like — and builds toward that.</p>
         </div>
       </div>
       <div class="how-step">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width:48px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         <div>
           <h3>Adapts to you</h3>
           <p>Some founders describe by feel. Some by specifics. Napkin infers your style from how you talk and adjusts — never asking when it can reasonably figure it out on its own.</p>
@@ -234,10 +234,7 @@ value directly — no middleman, no 10% cut.
 .install-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
 .install-row{padding:28px 32px}
 .install-row+.install-row{border-top:1px solid var(--border)}
-.install-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.78em;font-weight:600;margin-bottom:14px}
-.install-badge.blue{background:var(--accent-soft);color:var(--accent)}
-.install-badge.green{background:var(--green-soft);color:var(--green)}
-.install-badge.yellow{background:var(--yellow-soft);color:var(--yellow)}
+.install-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.78em;font-weight:600;margin-bottom:14px;background:var(--bg-elevated);color:var(--text-secondary)}
 .install-row h3{font-size:1.1em;font-weight:700;margin-bottom:8px}
 .install-row p{color:var(--text-secondary);font-size:.92em;margin-bottom:14px}
 .code-box{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
@@ -277,7 +274,7 @@ footer .bottom{max-width:820px;margin:32px auto 0;padding-top:20px;border-top:1p
     <p class="section-sub">Three ways in. Whatever you're already using.</p>
     <div class="install-card">
       <div class="install-row">
-        <span class="install-badge blue">FOR AGENT USERS</span>
+        <span class="install-badge">FOR AGENT USERS</span>
         <h3>Install the skill</h3>
         <p>If you use an agent with skill support (Hermes, Claude Code, Cursor, Codex, OpenCode):</p>
         <div class="code-box">
@@ -286,7 +283,7 @@ footer .bottom{max-width:820px;margin:32px auto 0;padding-top:20px;border-top:1p
         </div>
       </div>
       <div class="install-row">
-        <span class="install-badge green">FOR CHATGPT / CLAUDE / ANY LLM</span>
+        <span class="install-badge">FOR CHATGPT / CLAUDE / ANY LLM</span>
         <h3>Copy the prompt</h3>
         <p>No skill support? Paste this into any LLM:</p>
         <div class="code-box">
@@ -296,12 +293,12 @@ footer .bottom{max-width:820px;margin:32px auto 0;padding-top:20px;border-top:1p
         <span id="np" style="display:none">You are Napkin. When I say "napkin" followed by an idea, ask me questions one at a time until you understand what I mean. Before I answer, predict what I'd say. After I answer, score how close you were. When you can predict my answers consistently, write up the idea as a doc with: what it is, who it's for, brand feel, key decisions, MVP scope, UX scenarios, and open questions. Then ask "ship it?"</span>
       </div>
       <div class="install-row">
-        <span class="install-badge yellow">FOR CLI USERS</span>
+        <span class="install-badge">FOR CLI USERS</span>
         <h3>Run it in your terminal</h3>
         <p>Clone and run standalone:</p>
         <div class="code-box">
-          <code>git clone https://github.com/buckZz7/napkin.git && cd napkin && python cli.py "your idea"</code>
-          <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/buckZz7/napkin.git && cd napkin && python cli.py');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+          <code>git clone https://github.com/buckZz7/napkin.git<br>cd napkin<br>uv venv && source .venv/bin/activate<br>uv pip install openai<br>python cli.py "your idea"</code>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/buckZz7/napkin.git && cd napkin && uv venv && source .venv/bin/activate && uv pip install openai && python cli.py');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
         </div>
       </div>
     </div>
