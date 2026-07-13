@@ -60,4 +60,4 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 
 - **Convergence loop enforcement:** How to structurally enforce predictions and gap scores so the LLM doesn't skip them? Format requirements, self-checks, or other mechanisms. (Partially answered: visible prediction format + self-check before each response.)
 - **Best-in-class default:** How does the napkin communicate "aim for best in class" to the building agent without being prescriptive about what that means for each project?
-- **Testing framework:** The "two agents, one with napkin one without" quality metric — how to implement and what to measure.
+- **Evaluation framework:** The two-agent test — give two agents the same task, one with a napkin and one without. Measure whether the napkin agent's build comes out better. See `eval/README.md` for the framework design.

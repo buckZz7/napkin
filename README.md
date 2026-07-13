@@ -80,6 +80,8 @@ napkin/
 ├── NAPKIN.md         # Napkin's own napkin (the project vision)
 ├── docs/
 │   └── index.html    # Landing page
+├── eval/
+│   └── README.md     # Evaluation framework design (two-agent test)
 └── LICENSE           # MIT
 ```
 
