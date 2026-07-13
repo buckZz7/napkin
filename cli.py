@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Napkin CLI — turn an idea into a clear doc.
+Napkin CLI — turn an idea into a launchpad.
 
 Usage:
     python cli.py "tipping app for creators"

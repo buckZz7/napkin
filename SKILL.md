@@ -1,6 +1,6 @@
 ---
 name: napkin
-description: Turn ideas into clear, structured docs ready for development. Founding napkins create new repos. Sub-napkins capture feature ideas for existing projects.
+description: Turn ideas into launchpads your agent can actually build from.
 version: 1.0.0
 author: Buck
 license: MIT
@@ -32,10 +32,6 @@ for any tool, agent, or human to act on.
 
 ## What happens
 
-There are two modes: **founding napkin** (new project) and **sub-napkin** (feature for an existing project). The agent figures out which mode from context — the user doesn't need to specify.
-
-### Founding napkin (new project)
-
 1. User writes an idea (could be 3 words or 3 paragraphs)
 2. You ask a question about the idea
 3. **Behind the scenes**: you answer the same question as the maintainer agent
@@ -50,36 +46,6 @@ There are two modes: **founding napkin** (new project) and **sub-napkin** (featu
 9. Show user the NAPKIN.md preview
 10. Ask "Ship it?"
 11. If yes: create GitHub repo, push NAPKIN.md + README.md + basic structure
-
-### Sub-napkin (feature for existing project)
-
-If the idea references something that already exists — mentions a product
-name, a feature, "add X to Y", "what if we did Z" — it's a sub-napkin.
-
-1. User writes the feature idea
-2. If the target repo isn't obvious, ask "which repo?" (or check if the user
-   has repos with an existing NAPKIN.md)
-3. Run a **lighter convergence**: 2-3 open-ended questions, no exam round.
-   Just enough to make the idea clear enough for an agent to act on.
-4. Generate a sub-napkin file (see Sub-napkin format)
-5. Ask "Ship it?"
-6. If yes: add the file to `napkins/` in the existing repo and push
-7. **Build it.** The sub-napkin isn't done when the file is written. It's
-   done when the feature is built and working, with no more questions to the
-   founder. The doc must be complete enough for any coding agent to build
-   the feature without asking the user anything else. Same standard as the
-   founding napkin.
-
-Sub-napkins are self-contained. They don't reference the main NAPKIN.md for
-context — each one includes everything an agent needs to understand and
-work on that specific feature. This way the user can hand one to a different
-agent and it works standalone.
-
-### Detecting which mode
-
-- Idea mentions an existing project, product name, or feature → sub-napkin
-- Idea is a standalone new concept → founding napkin
-- Ambiguous → ask "Is this a new project or a feature for something you already have?"
 
 ## Question strategy
 
@@ -313,37 +279,7 @@ Tone, personality, aesthetic direction.
 - Things still unclear
 ```
 
-## Sub-napkin format
-
-Sub-napkins live in `napkins/` in the existing repo. Each one is
-self-contained — no dependency on NAPKIN.md for context.
-
-```markdown
-# [Feature name]
-
-## What this is
-One paragraph. What the feature does, in plain language.
-
-## Why
-Why this feature exists. What problem it solves for the user.
-
-## Scope
-**In:** What this feature includes.
-**Out:** What it doesn't (yet).
-
-## How it works
-Brief description of the approach. Not a full spec — just enough for an
-agent to know what to build.
-
-## Open questions
-- Things still unclear
-```
-
-Filename: `napkins/[slugified-feature-name].md`
-
 ## Shipping
-
-### Founding napkin (new repo)
 
 1. Run the repo creation script:
    ```bash
@@ -359,22 +295,6 @@ Filename: `napkins/[slugified-feature-name].md`
 
 2. Default to public for Buck (buckZz7), private for others.
 3. Return the repo URL.
-
-### Sub-napkin (existing repo)
-
-1. Clone the target repo (or use the GitHub API).
-2. Create `napkins/` directory if it doesn't exist.
-3. Write the sub-napkin file as `napkins/[slug].md`.
-4. Commit and push:
-   ```bash
-   cd [repo]
-   mkdir -p napkins
-   echo "[sub-napkin content]" > napkins/[slug].md
-   git add napkins/
-   git commit -m "Add sub-napkin: [feature name]"
-   git push
-   ```
-5. Return the file URL.
 
 ## CLI fallback
 

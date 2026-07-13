@@ -77,10 +77,10 @@ Hand this to your coding agent and say: "Read NAPKIN.md and build an MVP from it
 
 ## What Napkin is not
 
-- Not a builder — it gets the vision clear, your tools build it
-- Not a chatbot — it's a structured convergence process
-- Not prescriptive — it surfaces decisions, your agent makes the final call
-- Not locked in — the NAPKIN.md works with any tool, agent, or human
+- **Not a builder — it gets the vision clear, your tools build it**
+- **Not a chatbot — it's a structured convergence process with predictions and gap scoring**
+- **Not prescriptive — it surfaces decisions, your agent makes the final call**
+- **Not locked in — the NAPKIN.md works with any tool, agent, or human**
 
 ## Project structure
 
@@ -93,7 +93,6 @@ napkin/
 ├── repo.py           # GitHub repo creation
 ├── docs/
 │   └── index.html    # Landing page
-├── napkins/          # Sub-napkins (feature ideas for this project)
 └── tests/            # Testing framework
 ```
 

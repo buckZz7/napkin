@@ -1,12 +1,12 @@
 """
 Napkin engine — convergence loop.
 
-Turns fuzzy ideas into clear docs. The engine asks questions, predicts the
+Turns ideas into launchpads. The engine asks questions, predicts the
 user's answers behind the scenes, scores the gap, and repeats until it
 understands the idea as well as the user does. Then it runs a verification
 round (multiple choice exam) and generates the napkin doc.
 
-Napkin is a sketch tool — it produces clear docs, not running software.
+Napkin produces clear docs, not running software.
 """
 
 import json

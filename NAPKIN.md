@@ -2,9 +2,9 @@
 
 ## What this is
 
-Napkin turns ideas into docs that ignite heat-seeking missiles. You say "napkin" and ramble your idea — three words or three paragraphs. Napkin asks questions until it understands your vision as well as you do. Then it ships a NAPKIN.md that gives any coding agent the goal, the context, and the decision map to build toward the best possible version of your idea — not just a functional one.
+Napkin turns ideas into launchpads. You say "napkin" and ramble your idea — three words or three paragraphs. Napkin asks questions until it understands your vision as well as you do. Then it ships a NAPKIN.md that doesn't just describe what you want — it orients your agent's entire reasoning process toward the best possible version of your vision.
 
-The napkin isn't a blueprint that tells the agent exactly what to do. It's a launchpad that orients the agent's entire reasoning process. When the agent hits a fork in the road — what framework, what design approach, what tradeoff — the napkin tells them what matters and what the founder's goal is, so they can make the right call without going back and asking.
+The napkin is a launchpad, not a blueprint. It lights the rocket; your building agent is the guidance system.
 
 ## Who it's for
 
@@ -22,13 +22,9 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 - **The three-part outcome.** The napkin should give the agent enough context to build: everything the founder wanted + nothing they didn't want + surprises they love. The "nothing you didn't want" is just as important as the "and more." The napkin needs to make the boundaries clear.
 - **Infer always, confirm when unsure.** The napkin should constantly infer from everything the founder says and does — their technical level, their aesthetic preferences, their communication style. Never ask when it can reasonably infer. Confirm when it's unsure. Some founders describe by feel, some by specifics. The napkin adapts to the founder's style, not the other way around.
 - **Don't open with "how technical are you."** The first question should flow naturally from the idea. The agent can infer technical level from how the founder writes. Asking directly throws the user out of idea mode and into doubt.
-- **The founder owns what happens after shipping.** Napkin gets the vision clear; it doesn't build it, deploy it, or maintain it. People already have tools for that.
-- **The convergence loop is the agent's partner.** When the agent reads the napkin, it should feel like a partner who understands the goal — not a contractor following a spec. The napkin orients the agent toward the founder's vision so that every decision serves it.
-- **No personal or project-specific details leak.** Lessons from real projects are abstracted to transferable principles. The agent picking up the napkin doesn't need to know about other projects — it needs the principle.
-- **The format may evolve.** The NAPKIN.md structure might need to change to better serve the "heat-seeking missile" goal — capturing goals, decisions, and context rather than just descriptions. This is a decision for the agent building Napkin to make based on what works.
-- **The convergence loop must be structurally enforced.** Predictions and gap scores are required every turn — not optional. The LLM running the loop must not skip the protocol when it gets caught up in conversation. Format enforcement (visible score line, self-check before each response) is needed.
+- **The convergence loop is the product.** The convergence loop — predict the founder's answer, score the gap, adjust — is what makes Napkin different from a questionnaire. The loop ensures the agent actually understands the vision, not just collecting answers. Predictions and gap scores are required every turn — not optional.
 - **Napkin is for every handoff in the chain.** The same gap between founder and builder exists between agent and subagent, maintainer and contributor. Every delegation is a mini-napkin. The convergence loop makes the implicit explicit for the entire chain.
-- **The convergence loop should test itself.** A potential quality metric: give two agents the same task, one with a napkin and one without. If the napkin is good, the napkin agent's output should be noticeably better. This is a future testing framework addition.
+- **No personal or project-specific details leak.** Lessons from real projects are abstracted to transferable principles. The agent picking up the napkin doesn't need to know about other projects — it needs the principle.
 
 ## MVP scope
 
@@ -43,7 +39,6 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 - Skill-based interface (works in any agent chat — Telegram, Discord, CLI, Claude, ChatGPT)
 - CLI for standalone use
 - Landing page with the skill/prompt to give to your agent
-- Sub-napkins for feature ideas on existing projects
 
 **Out:**
 - Building, deploying, or maintaining anything
@@ -51,6 +46,7 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 - Making all technical decisions for the founder — the napkin surfaces and flags, the builder decides
 - CI/CD, project management, ongoing maintenance
 - GitHub account requirement — the file works standalone
+- Sub-napkins or feature docs for existing projects
 
 ## UX scenarios
 
@@ -58,16 +54,10 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 
 2. **The brain dump:** You've been thinking about something for weeks. You open the CLI and paste three paragraphs. Napkin asks questions that force you to clarify what you actually mean. Some answers come easy, some you have to think about. The napkin is inferring your style, surfacing decisions, and mapping the goal. When it converges, the napkin doc says it better than your original brain dump did — and gives the building agent a clear target to aim for.
 
-3. **The technical founder:** Someone who knows exactly what they wants — "Nostr NIP-28 chat client, Svelte, three-pane layout." Napkin infers they're technical, skips the basics, and drills into decisions that matter: "this has real-time chat — the rendering architecture is critical. Vanilla JS will cause jank. You said Svelte — good call." The napkin captures the technical context and flags any decisions the founder might have missed.
-
-4. **The monthly touch-base:** Three months later, the project has evolved. You start a touch-base with the napkin skill. You tell it what's changed. The napkin gets updated. New contributors (human or agent) read the updated version and know where things stand — and what decisions matter going forward.
+3. **The technical founder:** Someone who knows exactly what they want — "Nostr NIP-28 chat client, Svelte, three-pane layout." Napkin infers they're technical, skips the basics, and drills into decisions that matter: "this has real-time chat — the rendering architecture is critical. Vanilla JS will cause jank. You said Svelte — good call." The napkin captures the technical context and flags any decisions the founder might have missed.
 
 ## Open questions
 
-- **NAPKIN.md structure:** Does the current format (What this is / Who it's for / Key decisions / etc.) serve the "heat-seeking missile" goal, or does it need rethinking? The agent building Napkin should decide this based on what produces the best builds.
-- **Decision-surfacing implementation:** How does the convergence loop identify which decisions exist for a given project without a fixed checklist? The loop needs to infer the decision surface from the idea itself.
-- **Convergence loop enforcement:** How to structurally enforce predictions and gap scores so the LLM doesn't skip them? Format requirements, self-checks, or other mechanisms.
+- **Convergence loop enforcement:** How to structurally enforce predictions and gap scores so the LLM doesn't skip them? Format requirements, self-checks, or other mechanisms. (Partially answered: visible prediction format + self-check before each response.)
 - **Best-in-class default:** How does the napkin communicate "aim for best in class" to the building agent without being prescriptive about what that means for each project?
 - **Testing framework:** The "two agents, one with napkin one without" quality metric — how to implement and what to measure.
-- **Touch-base format:** Is it the full convergence loop again, or a lighter update flow? Maybe both — let the user choose.
-- **Existing LLM memory:** How to balance the agent's existing memory of the user against the napkin's independent assessment of the project's needs? Don't let biases skip important questions.
