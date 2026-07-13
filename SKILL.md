@@ -108,7 +108,12 @@ Tone, personality, aesthetic direction.
 
 ## Shipping
 
-Show the user the NAPKIN.md preview. Ask "Ship it?" If yes, give them the file to hand to their coding agent. That's it — Napkin's job is done.
+Show the user the NAPKIN.md preview. Ask "Ship it?" If yes:
+
+1. Write the NAPKIN.md to a file (e.g. `NAPKIN.md` in the current directory, or offer to save it somewhere specific)
+2. Tell the user: "Your NAPKIN.md is ready. Hand it to your coding agent and say: 'Read NAPKIN.md and build from it.' The agent should keep this file in the repo as the source of truth for your vision."
+
+That's it — Napkin's job is done.
 
 ## Principles
 
