@@ -281,11 +281,7 @@ Tone, personality, aesthetic direction.
 
 ## Shipping
 
-1. Run the repo creation script:
-   ```bash
-   python /opt/data/napkin/repo.py "[idea]" --napkin "[napkin_content]" [--private]
-   ```
-   Or do it manually with gh:
+1. Create a GitHub repo and push the napkin:
    ```bash
    REPO_NAME=[slugified name]
    gh repo create $REPO_NAME --public --description "[idea]" --clone=false
@@ -296,19 +292,10 @@ Tone, personality, aesthetic direction.
 2. Default to public for Buck (buckZz7), private for others.
 3. Return the repo URL.
 
-## CLI fallback
-
-If the user isn't in a chat (or wants to run standalone):
-```bash
-python /opt/data/napkin/cli.py "tipping app for creators"
-```
-
-The CLI uses the Python engine which calls the LLM directly.
-
 ## Three install paths
 
 When shipping the landing page or telling users how to get Napkin, there
-are three paths:
+are two paths:
 
 1. **Agent users** (Hermes, Claude Code, Cursor, Codex, OpenCode):
    `npx skills add buckZz7/napkin` — one command, auto-detects agent.
@@ -316,39 +303,8 @@ are three paths:
    page and paste it in. ChatGPT and Claude chat apps CANNOT install
    skills via npx — they're chat interfaces, not agent runtimes. The
    copy-paste prompt is the only path for them.
-3. **CLI**: Clone the repo, set up venv, run `python cli.py "idea"`.
 
-The landing page should show all three paths clearly with copy buttons.
-
-## Testing the convergence engine
-
-The engine has a testing framework at `/opt/data/napkin/tests/` that supports
-two modes: **simulated runs** (engine plays both sides against a ground-truth
-vision) and **recorded replays** (replay saved sessions with tweaked params).
-Outputs metrics: rounds to convergence, gap trajectory, exam pass rate, false
-convergence rate, coverage, missed areas.
-
-Run with `uv run` (pytest is in the project venv):
-
-```bash
-cd /opt/data/napkin
-uv run python3 tests/test_engine.py list                          # list ground truths + sessions
-uv run python3 tests/test_engine.py simulated tipping-app         # single simulated run
-uv run pytest tests/ -v -k "not simulated and not simulator and not replay"  # unit tests only
-```
-
-LLM-dependent tests auto-skip without `OPENAI_API_KEY`.
-
-See `references/testing-framework.md` for full API docs, the monkey-patch
-recording technique, and the ground truth format.
-
-**Quality metric — the two-agent test:** Give two agents the same build
-task, one with a NAPKIN.md and one without. If the napkin is good, the
-napkin agent's output should be noticeably better (fewer rework cycles,
-better architecture choices, closer to the founder's vision). This is a
-direct test of whether the napkin actually helps — not just whether the
-convergence loop agreed on vibes. Not yet implemented in the test suite;
-this is the next testing framework addition.
+The landing page should show both paths clearly with copy buttons.
 
 ## Principles
 
@@ -363,9 +319,8 @@ this is the next testing framework addition.
   autonomous building, deployment, or maintenance.
 - **Ship the whole vision.** If the napkin mentions a landing page, the repo
   should have a landing page. If it mentions a skill, the repo should have
-  the skill. If it mentions a CLI, include the CLI. The napkin doc should be
-  complete enough that a coding agent can build everything described in it
-  without asking the user more questions.
+  the skill. The napkin doc should be complete enough that a coding agent
+  can build everything described in it without asking the user more questions.
 - **Don't let high-gap threads drop.** If a round scores above 0.4, stay on
   that topic next round. The spike is usually where the most important
   learning happens.

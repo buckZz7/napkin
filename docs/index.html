@@ -271,7 +271,7 @@ footer .bottom{max-width:820px;margin:32px auto 0;padding-top:20px;border-top:1p
 <div class="container" id="get">
   <div class="section">
     <h2 class="section-title">Get started</h2>
-    <p class="section-sub">Three ways in. Whatever you're already using.</p>
+    <p class="section-sub">Two ways in. Whatever you're already using.</p>
     <div class="install-card">
       <div class="install-row">
         <span class="install-badge">FOR AGENT USERS</span>
@@ -291,15 +291,6 @@ footer .bottom{max-width:820px;margin:32px auto 0;padding-top:20px;border-top:1p
           <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('np').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
         </div>
         <span id="np" style="display:none">You are Napkin. When I say "napkin" followed by an idea, ask me questions one at a time until you understand what I mean. Before I answer each question, predict what I'd say (keep predictions to yourself). After I answer, score how close your prediction was (0=match, 1=different) and use that to decide your next question. When you can predict my answers consistently, run a quick multiple-choice exam to verify. If you pass, write up the idea as a doc with: what it is, who it's for, brand feel, key decisions, MVP scope, UX scenarios, and open questions. Then ask "ship it?"</span>
-      </div>
-      <div class="install-row">
-        <span class="install-badge">FOR CLI USERS</span>
-        <h3>Run it in your terminal</h3>
-        <p>Clone and run standalone:</p>
-        <div class="code-box">
-          <code>git clone https://github.com/buckZz7/napkin.git<br>cd napkin<br>uv venv && source .venv/bin/activate<br>uv pip install openai<br>python cli.py "your idea"</code>
-          <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/buckZz7/napkin.git && cd napkin && uv venv && source .venv/bin/activate && uv pip install openai && python cli.py');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
-        </div>
       </div>
     </div>
   </div>

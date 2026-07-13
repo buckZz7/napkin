@@ -36,8 +36,7 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 - Adaptive question style: infer the founder's type (feel-based vs specific) and adjust
 - Two output paths: push to GitHub repo (if connected) or give file to copy (if not)
 - Next-step guidance after shipping: "give this to your coding agent to build an MVP"
-- Skill-based interface (works in any agent chat — Telegram, Discord, CLI, Claude, ChatGPT)
-- CLI for standalone use
+- Skill-based interface (works in any agent chat — Telegram, Discord, Claude, ChatGPT)
 - Landing page with the skill/prompt to give to your agent
 
 **Out:**
@@ -47,6 +46,7 @@ Minimal. Like writing on a napkin — no distractions, just the idea and a brain
 - CI/CD, project management, ongoing maintenance
 - GitHub account requirement — the file works standalone
 - Sub-napkins or feature docs for existing projects
+- A CLI — the skill IS the product, no standalone CLI needed
 
 ## UX scenarios
 

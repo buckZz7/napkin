@@ -30,7 +30,7 @@ The convergence loop runs behind the scenes: before each question, Napkin predic
 
 ## Get started
 
-Three ways in. Whatever you're already using.
+Two ways in. Whatever you're already using.
 
 **Agent users** (Hermes, Claude Code, Cursor, Codex, OpenCode):
 ```bash
@@ -38,16 +38,6 @@ npx skills add buckZz7/napkin
 ```
 
 **ChatGPT / Claude chat / any LLM:** Copy the prompt from [the website](https://buckzz7.github.io/napkin/#get) and paste it in.
-
-**CLI:**
-```bash
-git clone https://github.com/buckZz7/napkin.git
-cd napkin
-uv venv && source .venv/bin/activate
-uv pip install openai
-export OPENAI_API_KEY=your-key
-python cli.py "tipping app for creators"
-```
 
 ## What you get
 
@@ -86,14 +76,11 @@ Hand this to your coding agent and say: "Read NAPKIN.md and build an MVP from it
 
 ```
 napkin/
-├── SKILL.md          # Convergence loop protocol — the "brain"
+├── SKILL.md          # Convergence loop protocol — the product
 ├── NAPKIN.md         # Napkin's own napkin (the project vision)
-├── engine.py         # Python convergence engine
-├── cli.py            # CLI interface
-├── repo.py           # GitHub repo creation
 ├── docs/
 │   └── index.html    # Landing page
-└── tests/            # Testing framework
+└── LICENSE           # MIT
 ```
 
 ## License
