@@ -10,7 +10,7 @@ The napkin isn't a blueprint. It's a launchpad. It lights the rocket; your build
 
 Every founder knows the gap: you have an idea in your head, you hand it to a builder (human or agent), and what comes back isn't what you imagined. Not because the builder is bad — because the vision never made it out of your head clearly enough.
 
-Napkin closes that gap. The convergence loop asks questions, predicts your answers behind the scenes, and scores how close it got. When it can consistently predict what you'd say, it understands your vision — and writes it down clearly enough for any agent to build from without asking you anything else.
+Napkin closes that gap. The convergence loop asks questions that narrow the space of possible visions — each question should help distinguish between different versions of what you mean. When the agent can answer key questions without guessing (first screen, target user, core interaction, MVP scope), it runs a verification round (multiple choice exam). Pass the exam, and the napkin ships.
 
 ## How it works
 
@@ -68,7 +68,7 @@ Hand this to your coding agent and say: "Read NAPKIN.md and build an MVP from it
 ## What Napkin is not
 
 - **Not a builder — it gets the vision clear, your tools build it**
-- **Not a chatbot — it's a structured convergence process with predictions and gap scoring**
+- **Not a chatbot — it's a structured convergence process with an exam**
 - **Not prescriptive — it surfaces decisions, your agent makes the final call**
 - **Not locked in — the NAPKIN.md works with any tool, agent, or human**
 

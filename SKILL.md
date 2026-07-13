@@ -1,7 +1,7 @@
 ---
 name: napkin
 description: Turn ideas into launchpads your agent can actually build from.
-version: 1.0.0
+version: 2.0.0
 author: Buck
 license: MIT
 platforms: [linux, macos, windows]
@@ -34,18 +34,38 @@ for any tool, agent, or human to act on.
 
 1. User writes an idea (could be 3 words or 3 paragraphs)
 2. You ask a question about the idea
-3. **Behind the scenes**: you answer the same question as the maintainer agent
-   (predicting what the user would say, based on accumulated context)
-4. User answers
-5. You score the gap between your prediction and the user's answer (0=match,
-   1=different)
-6. The gap feeds into the next question. High gap → ask something that
-   clarifies the disagreement. Low gap → move to a new area
-7. Repeat until convergence (see Convergence section)
-8. Run verification round (the exam)
-9. Show user the NAPKIN.md preview
-10. Ask "Ship it?"
-11. If yes: create GitHub repo, push NAPKIN.md + README.md + basic structure
+3. User answers
+4. You decide: do I understand this area well enough to move on, or do I
+   need to drill deeper here?
+5. Repeat until you understand the vision (see Convergence section)
+6. Run verification round (the exam)
+7. Show user the NAPKIN.md preview
+8. Ask "Ship it?"
+9. If yes: create GitHub repo, push NAPKIN.md + README.md + basic structure
+
+## How to think during the conversation
+
+You are building a mental model of the founder's vision. With each answer,
+you should be tracking:
+
+- **What do I know for certain?** The founder explicitly said it.
+- **What am I inferring?** They didn't say it directly, but it follows from
+  what they said. Flag these mentally — if an inference feels uncertain,
+  ask a question to confirm it.
+- **What do I still not know?** Areas where I have no information yet.
+  These drive the next question.
+
+You don't need to write this tracking down. You need to *do* it. The
+quality of your questions IS the quality of your model. If you ask a
+question the founder already answered, you weren't listening. If you ask
+a question that doesn't help you distinguish between two possible versions
+of the vision, it's a wasted question.
+
+**Every question should help you narrow the space of possible visions.**
+If the founder's answer to a question would be the same regardless of which
+version of the vision is correct, the question doesn't help you converge.
+Ask questions that split the space — where different answers point to
+genuinely different products.
 
 ## Question strategy
 
@@ -62,7 +82,7 @@ the agent closest to understanding the idea, not a fixed intake question.
   client," they're technical. If they say "I want something that feels like
   a saloon," they're a feel person. Adapt from there.
 
-**Round 2-4 (broad):** Things the maintainer can't be expected to guess.
+**Round 2-4 (broad):** Things you can't be expected to guess.
 - What does success look like?
 - Brand feel / personality
 - What problem does this solve?
@@ -82,129 +102,49 @@ the agent closest to understanding the idea, not a fixed intake question.
 - How does this make money / sustain itself?
 
 **Round 9+ (refinement):** Only if not yet converged.
-- Any remaining disagreements from earlier rounds
+- Areas where you're still uncertain
 - Specific technical or design decisions
 
 Never repeat a question. Never ask more than one question at a time.
 
-**High-gap follow-up rule:** If a round scores above 0.4, the next question
-MUST stay in the same area. Don't move to a new topic. Drill into the
-disagreement until the gap drops below 0.3, then move on. The only exception
-is if the user explicitly says "I don't know, let's move on" — in which case
-that area goes into the Open Questions section of the napkin.
-
 **Grounding question:** Before declaring convergence, ask at least one
 concrete question about what the user literally sees or does. "What's the
 first thing the user sees?" or "Walk me through the first 30 seconds." If
-the maintainer can't predict the answer, you're not converged — you've
-just agreed on vibes.
-
-## How to be the maintainer agent
-
-**EVERY TURN — NO EXCEPTIONS — you must do these in order before writing your response:**
-
-1. **Predict** — Write your prediction of what the user will say, as a direct quote of the exact words you think they'll use. Not a paraphrase. Not "they'll say something about X." The actual words. This happens in your thinking before you write the response.
-
-2. **Format your response with the prediction visible** — Every response MUST include this block at the top, before the question:
-
-```
-**Prediction:** "[exact words you predict the user will say]"
-```
-
-This is non-optional. If your response does not start with a prediction, you have broken the protocol. The prediction must be specific enough to be wrong — not "they'll say something about design" but "they'll say 'I want it to feel like Discord, dark mode, dense layout.'"
-
-3. **After the user answers** — Score the gap (see Gap scoring) and write the score before your next prediction:
-
-```
-**Gap: [score]** — [one sentence explaining why]
-```
-
-4. **Self-check before sending** — Before sending any response, verify:
-   - Did I write a prediction as a direct quote?
-   - Did I score the previous gap (if not the first turn)?
-   - Did I use the gap score to decide my next question?
-
-If any answer is no, stop and rewrite the response.
-
-**Why this matters:** Without structural enforcement, the LLM running the convergence loop will naturally drift into conversation mode and skip predictions. The visible format requirement makes it impossible to skip without visibly breaking the protocol.
-
-When predicting the user's answer, think like someone who has been in the
-room since the idea was first written down. You have:
-- The original idea text
-- All previous Q&A
-- Common patterns for similar projects
-- Your own understanding of what makes sense
-
-Be opinionated. Make a choice. Don't say "it depends." The goal is to be
-specific enough that the user's answer either confirms, corrects, or
-surprises you.
-
-## Gap scoring
-
-After the user answers, compare your prediction to their answer using these
-structured criteria:
-
-**Intent match:** Did you predict the same core intent?
-- Same intent (0.0) — you both want the same thing for the same reason
-- Same direction (0.1-0.2) — same goal, minor differences in approach or wording
-- Partial overlap (0.3-0.4) — some shared ground, but meaningful divergence
-- Different intent (0.5-0.7) — you were thinking about this differently
-- Opposite (0.8-1.0) — you and the user want fundamentally different things
-
-**Specificity match:** Did you predict the specifics?
-- If you said "React" and they said "React" — add 0.0
-- If you said "React" and they said "Vue" — add 0.2
-- If you said "a web app" and they said "a React app with a dashboard" — add 0.1
-- If you predicted specifics and they had none ("I don't know") — add 0.3
-
-Final gap = intent match score + specificity adjustment, capped at 1.0.
-
-**"I don't know" is not convergence.** If the user says "I'm not sure" or
-"maybe you're right" or defers to your prediction, score it 0.5 at best.
-The user not having an answer means the vision isn't formed yet in that area.
-That's useful information — it should go into Open Questions, not count as
-agreement. You predicted an answer; they didn't confirm it.
-
-The one exception: if the user says "yeah, that's what I was thinking" and
-expands on it with their own specifics, that's genuine confirmation even
-if they initially hedged. Use judgment.
-
-The user doesn't see the score — it only drives question selection and
-convergence detection.
+you can't answer this yourself from the conversation so far, you're not
+converged — you've just agreed on vibes.
 
 ## Convergence
 
-Convergence happens in two phases:
+You are converged when you can answer these questions without guessing:
 
-**Phase 1 — Open-ended convergence:**
-- Last 3 gap scores are all ≤ 0.2, OR
-- You've run 10+ rounds and the last 3 are all ≤ 0.3, OR
-- You genuinely can't think of a question where you'd be surprised by the
-  user's answer
-- AND you've asked at least one concrete grounding question (what does
-  the user see/do) and the gap on that was ≤ 0.3
+1. What does the user see on the first screen?
+2. Who is the target user?
+3. What's the core interaction?
+4. What's explicitly IN the MVP?
+5. What's explicitly OUT of the MVP?
+6. What aesthetic or brand direction has the user described?
+7. What key decisions has the user expressed a preference on?
+8. Are there decisions you've identified that the user hasn't addressed?
 
-**Phase 2 — Verification round (the exam):**
-- Run 3-5 multiple choice questions (see Verification round section)
-- If you predict the user's answers correctly on all or all-but-one, you're
-  converged — proceed to napkin generation
-- If you miss 2+, go back to open-ended questions in the areas you missed,
-  then run another verification round
+If you can answer all of these confidently, you're ready for the exam.
+If any of them are vague, ask a question to clarify that specific area.
 
-Don't drag it out. If you're converged after 4 open-ended rounds, run the
-exam after 4. If you're not converged after 12, run the exam anyway and
-let the misses populate Open Questions.
+**Don't drag it out.** If you're converged after 4 questions, run the exam
+after 4. If you're not converged after 12, run the exam anyway and let the
+misses populate Open Questions.
+
+**Don't rush it either.** The exam will catch false convergence, but it
+wastes the user's time. If you know you're uncertain about something, ask
+about it before the exam. The exam is a verification tool, not a
+substitute for good questions.
 
 ## Verification round (the exam)
 
-After the open-ended convergence loop shows low gaps (you think you're
-converged), run a **verification round** before shipping. This is where
-the format changes.
+After you believe you're converged, run a verification round before
+shipping. This is where you prove you actually understand the vision.
 
-Instead of open-ended questions, you generate **multiple choice questions**
-— the kind where the user just picks an option. These test whether you
-actually understand the vision, not just whether you've been agreeing on
-vibes.
+Generate 3-5 multiple choice questions. These test whether you actually
+understand the vision, not just whether you've been agreeing on vibes.
 
 Generate 3-5 multiple choice questions covering different areas:
 - One about target users
@@ -218,26 +158,20 @@ Format each as:
 ```
 **Q: [Question about the project]**
 
-A) [Option that you predict the user would pick]
+A) [Option that you think the user would pick]
 B) [Plausible but wrong option]
 C) [Plausible but wrong option]
 D) [None of the above — something else]
 ```
 
-**Before the user answers**, predict which option they'll pick (A, B, C, or
-D). DO NOT write the predictions anywhere in the message. DO NOT write
-"(hidden)" or "predictions: X, Y, Z" — that is revealing them. The
-predictions exist only in your thinking. After the user answers, in your
-NEXT message, reveal the predictions and score whether you got each one
-right. This keeps the exam from biasing the user's answers.
-
 The exam questions should be the last thing in your message. Nothing after
-them. No predictions, no analysis, no notes. Just the questions.
+them. No analysis, no notes. Just the questions.
 
-Scoring:
-- You predicted correctly → 0.0 gap. You understand this area.
-- You predicted wrong → 1.0 gap. This is a specific misunderstanding.
-  Note what you got wrong and why.
+**After the user answers**, score yourself:
+- You got it right → you understand this area. Move on.
+- You got it wrong → you misunderstood something specific. Go back to
+  open-ended questions targeting the area you missed, then run another
+  verification round.
 
 If you get all or all-but-one correct, you're converged — ship. If you miss
 2 or more, go back to open-ended questions targeting the areas you missed,
@@ -309,8 +243,6 @@ The landing page should show both paths clearly with copy buttons.
 ## Principles
 
 - **You are both the question-asker AND the maintainer.** No separation needed.
-- **The user never sees the maintainer prediction or gap score.** They just see
-  questions and then the napkin.
 - **Keep questions conversational.** Not a form. Not a survey.
 - **Follow tangents.** If the user goes off on a tangent, follow them. The tangent might be the
   answer to a question you haven't asked yet.
@@ -321,9 +253,6 @@ The landing page should show both paths clearly with copy buttons.
   should have a landing page. If it mentions a skill, the repo should have
   the skill. The napkin doc should be complete enough that a coding agent
   can build everything described in it without asking the user more questions.
-- **Don't let high-gap threads drop.** If a round scores above 0.4, stay on
-  that topic next round. The spike is usually where the most important
-  learning happens.
 - **"I don't know" is data, not agreement.** It means the vision isn't
   formed in that area. Record it in Open Questions, don't count it as
   convergence.
@@ -407,7 +336,7 @@ The landing page should show both paths clearly with copy buttons.
   Napkin notes the decision.
 - **The convergence loop applies to every handoff.** The same gap between
   founder and builder exists between agent and subagent, maintainer and
-  contributor. The convergence loop pattern — predict, score, adjust —
+  contributor. The convergence loop pattern — ask, understand, verify —
   makes the implicit explicit for any delegation, not just
   founder-to-builder.
 - **No personal or project-specific details leak.** When translating
